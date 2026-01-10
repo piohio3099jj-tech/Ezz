@@ -15,7 +15,6 @@ const __dirname = path.dirname(__filename);
 
 const claimFilePath = path.join(__dirname, 'claim.json');
 
-// التأكد من وجود ملف claim.json عند بدء التشغيل
 if (!existsSync(claimFilePath)) {
     console.log('[إعداد] ملف claim.json غير موجود، سيتم إنشاؤه.');
     writeFileSync(claimFilePath, JSON.stringify({}));
@@ -47,16 +46,11 @@ function incrementClaimCount(adminId) {
 }
 
 // =================================================================================
-// --- نهاية وظائف إدارة ملف claim.json ---
-// =================================================================================
-
-// =================================================================================
 // --- وظائف إدارة ملف staffApplications.json ---
 // =================================================================================
 
 const staffApplicationsFilePath = path.join(__dirname, 'staffApplications.json');
 
-// التأكد من وجود ملف staffApplications.json عند بدء التشغيل
 if (!existsSync(staffApplicationsFilePath)) {
     console.log('[إعداد] ملف staffApplications.json غير موجود، سيتم إنشاؤه.');
     writeFileSync(staffApplicationsFilePath, JSON.stringify({}));
@@ -104,16 +98,11 @@ function updateApplicationAcceptance(userId, hasLogo) {
 }
 
 // =================================================================================
-// --- نهاية وظائف إدارة ملف staffApplications.json ---
-// =================================================================================
-
-// =================================================================================
-// --- وظائف إدارة ملف staffWarnings.json (للتحذيرات) ---
+// --- وظائف إدارة ملف staffWarnings.json ---
 // =================================================================================
 
 const staffWarningsFilePath = path.join(__dirname, 'staffWarnings.json');
 
-// التأكد من وجود ملف staffWarnings.json عند بدء التشغيل
 if (!existsSync(staffWarningsFilePath)) {
     console.log('[إعداد] ملف staffWarnings.json غير موجود، سيتم إنشاؤه.');
     writeFileSync(staffWarningsFilePath, JSON.stringify({}));
@@ -168,24 +157,11 @@ function resetStaffWarnings(userId) {
 }
 
 // =================================================================================
-// --- نهاية وظائف إدارة ملف staffWarnings.json ---
-// =================================================================================
-
-// =================================================================================
-// --- وظائف إدارة ملف adminWarnings.json (لتحذيرات الإدارة) ---
-// =================================================================================
-// تم نقل الوظائف إلى src/utils/adminWarningsStore.js للاستخدام المشترك
-// =================================================================================
-// --- نهاية وظائف إدارة ملف adminWarnings.json ---
-// =================================================================================
-
-// =================================================================================
-// --- وظائف إدارة ملف dndMode.json (لوضع لا تزعجه) ---
+// --- وظائف إدارة ملف dndMode.json ---
 // =================================================================================
 
 const dndModeFilePath = path.join(__dirname, 'dndMode.json');
 
-// التأكد من وجود ملف dndMode.json عند بدء التشغيل
 if (!existsSync(dndModeFilePath)) {
     console.log('[إعداد] ملف dndMode.json غير موجود، سيتم إنشاؤه.');
     writeFileSync(dndModeFilePath, JSON.stringify({ enabled: false }));
@@ -220,14 +196,9 @@ function isDndModeEnabled() {
 }
 
 // =================================================================================
-// --- نهاية وظائف إدارة ملف dndMode.json ---
-// =================================================================================
-
-// =================================================================================
 // --- إعدادات الردود التلقائية ---
 // =================================================================================
 
-// الرومات التي سيرسل فيها البوت رسالة تلقائية عند أي رسالة
 const AUTO_MESSAGE_CHANNELS = [
     '1434534543133507614',
     '1397022565096095836',
@@ -236,21 +207,16 @@ const AUTO_MESSAGE_CHANNELS = [
     '1435008789739733232'
 ];
 
-// صورة الرسالة التلقائية
 const AUTO_MESSAGE_IMAGE = 'https://media.discordapp.net/attachments/1397095407745499196/1429784555220369408/standard_1.gif?ex=6917b2e2&is=69166162&hm=d9ac58c76a495fe426dad08596c359de085cea4ddc847a8c258611602f38d9b5&width=2797&height=163&';
 
-// الرول المسموح له باستخدام الردود التلقائية
 const AUTO_REPLY_ROLE_ID = '1418942792121585724';
 
-// رسالة الرد على كلمة "فراغ"
 const FARAGH_REPLY = `.✦  　　　　　　　　　　.　　　　　　　　　✦ 　　　　. 　　　　　　　　　✦ 　　　　　❀ ‏Ezz ❀　　       　✦    　　　　 　　　　　　　　　　　　　　　　       　   　　　　　　　　　　　　　　　　       　    ✦ 　   　　　,　　　　　　　　　*　　     　　　　 　　,　　　 ‍ ‍ ‍ ‍ 　 　　　　　　　　　　　　.　　　　　 　　 　　　.　　　　　　　　　✦ 　　　　 　           　　　　　　　　　　　　　　❀ ‏Ezz ❀　　　　　˚　　　✦  　   　　　　,　　　　　　　　　　　       　    　　　　　　　　　　　　　　　　.　　　✦   　　    　　　　　 　　　　　.　　　　　　　　　　　　　.　　　　　　　　　　　　　*　　　　　　　　　. 　　　　　　　　　　.　　　　　　✦ 　　　　　　　❀ ‏Ezz ❀ ✦  　　　　　　　　　　　　　　　　       　   　　　　 　　　　　　　　　　　　　　　　       　   　　　　　　　　　　　　　　　　       　    ✦  　   　　　,　　　　　　　　　*　　     　　　　 　　,　　　 ‍ ‍ ‍ ‍ 　 　　　　✦ 　　　　　　　　.　　　　　 　　 　　　.　　❀ ‏Ezz ❀　　　　　　　　　　　 　           　　　　　　　　　　　　　　　　　　　˚　　　 　✦    　　　　,　　　　　　　　✦ 　　　       　    　　　　　　　　　　　　　　　　.　　　  　　 ✦    　　　　　 　　　　　.　　　　　　　　　　　　　.　　　　　　　　　　　　　　　* 　　   　　　　　 ✦　　　　　　　　　　. 　　　　　　　　　　.　　　　　✦ 　　　　　　　　.❀ ‏Ezz ❀ 　　　　　　　　　　　　　　　　       　   　　　　 　　　　　　　　　　　　　　　　       　   　　　　　　　　　　　　　　　　       　       ✦  　   　　　,　　　　　　　　　❀ ‏Ezz ❀　　     　　　　 　　,　　　 ‍ ‍ ‍ ‍ 　 　　　　　　　　　　　　.　　　　　 　　 　　　.　　　　　　　✦ 　　　　　　 　           　　　　　　　　　　　　　　　　　　　˚　　　 　   　　　　,　　　　　　　　　　　       　    　　　　　　　　　　　　　　　　.　　　  　　    　　　　　 　　　　　.　　　　　　　　　　　　❀ ‏ ❀ ‏Ezz　.　　　　　　　　　　　　　　　* 　　   　　　　　 ✦*　　　　　　　　　.✦  　　　　　　  　　　　.　　　　　　　　　✦ 　　　　. 　　　　　　　　　✦ 　　　　　　　       　✦    　　　　 　　　　　　　　　　　　　　　　       　   　　　　　　　　　　　　　　　　       　    ✦  　   　　　,　　　‏Ezz ❀ ‏ ❀　　　　　　*　　     　　　　 　　,　　　‍ ‍ ‍ ‍ 　 　　　　　　　　　　　　.　　　　　 　　 　　　.　　　　　　　　    ✦ 　　　　 　           　　　　　　　　　　　　　　　　　　　˚　　 ✦  　   　　　　,　　　　　 　　　　　　       　    　　　　　　　　　　　　　　　　.　　　✦   　　    　　　　　 　　　　　.　　　　　　　　　　　　　.　　　　　　　　　　‏Ezz ❀ ‏❀　　　*　　　　　　　　　. 　　　　　　　　　　.　　　　　　  : ✦ 　　　　　　　.✦  　　　　　　　　　　　　　　　　       　   　　　　 　　　　　　　　　　　　　　　　       　   　　　　　　　　　　　　　　　　       　    ✦  　   　　　,　　　　❀ ‏Ezz ❀　　　　　*　　     　　　　 　　,　　　 ‍ ‍ ‍ ‍ 　 　　　　✦ 　　　　　　　　.　　　　　 　　 　　　.　　　　　　　　 　　　　　 　           　　　　　　　　　　　　　　　　　　　˚　　　 　✦    　　　　,　　　　　　　　✦ 　　　       　    　　　　　　　　　　　　.　　　❀ Ezz  ❀`;
 
 // =================================================================================
-// --- نهاية إعدادات الردود التلقائية ---
+// --- دالة تسجيل الأوامر ---
 // =================================================================================
 
-
-// --- دالة تسجيل الأوامر ---
 async function registerCommands() {
     const commands = [];
     const commandsDir = path.join(__dirname, 'commands');
@@ -310,7 +276,10 @@ async function registerCommands() {
     }
 }
 
+// =================================================================================
 // --- دالة تحميل الأوامر إلى ذاكرة البوت ---
+// =================================================================================
+
 function loadCommands(client) {
     client.commands = new Collection();
     const commandsDir = path.join(__dirname, 'commands');
@@ -333,7 +302,167 @@ function loadCommands(client) {
     }
 }
 
+// =================================================================================
+// --- دالة تحديث لوحة التذاكر ---
+// =================================================================================
+
+async function refreshTicketPanel(client, channelId) {
+    if (!channelId) return;
+    const channel = await client.channels.fetch(channelId).catch(() => null);
+    if (!channel || channel.type !== ChannelType.GuildText) return;
+    
+    const PANEL_IMAGE = 'https://cdn.discordapp.com/attachments/1438037917124788267/1438521792296652800/Picsart_25-10-16_13-18-43-513.jpg?ex=69172f51&is=6915ddd1&hm=11fe8fbf7548e562ec12486d86dd5432923a9796582c42275bec8742ca9e157b&';
+    const embed = new EmbedBuilder().setColor(0x808080).setTitle('تذكره الدعم الفني').setImage(PANEL_IMAGE);
+    
+    const select = new StringSelectMenuBuilder()
+        .setCustomId('ticket_select')
+        .setPlaceholder('اختر نوع التذكرة')
+        .addOptions([
+            { label: 'الدعم الفني', value: 'support', emoji: { id: '1386132899874472098', name: 'estaff_ds' } },
+            { label: 'ريوارد', value: 'reward', emoji: { id: '1434107495722520617', name: '1531vslgiveaway' } },
+            { label: 'إعلان', value: 'advertisement', emoji: '📢' },
+            { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
+        ]);
+
+    const row = new ActionRowBuilder().addComponents(select);
+    
+    try {
+        const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
+        if (messages) {
+            const panelMsg = messages.find(m => m.author.id === client.user.id && m.components?.some(r => r.components?.some(c => c.customId === 'ticket_select')));
+            if (panelMsg) {
+                await panelMsg.edit({ embeds: [embed], components: [row] }).catch(() => {});
+                return;
+            }
+        }
+    } catch {}
+    
+    await channel.send({ embeds: [embed], components: [row] }).catch(() => {});
+}
+
+// =================================================================================
+// --- دالة تحديث لوحة التقديم على الإدارة ---
+// =================================================================================
+
+async function refreshStaffApplicationPanel(client, channelId) {
+    if (!channelId) return;
+    const channel = await client.channels.fetch(channelId).catch(() => null);
+    if (!channel || channel.type !== ChannelType.GuildText) return;
+    
+    const STAFF_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1433832273538711612/1436075334565888010/image.png?ex=690e48e0&is=690cf760&hm=88ebb29ea8c00615c80da44823be56fd7d06367e88e4fb21980e1af0b7f543e0&=&format=webp&quality=lossless&width=963&height=320';
+    const embed = new EmbedBuilder().setColor(0x808080).setTitle('تقديم إدارة').setImage(STAFF_PANEL_IMAGE);
+    const select = new StringSelectMenuBuilder()
+        .setCustomId('staff_application_select')
+        .setPlaceholder('اختر للتقديم')
+        .addOptions([
+            { label: 'تقديم اداره', value: 'staff_application', emoji: { id: '1386133151574654976', name: 'staff' } },
+            { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
+        ]);
+    const row = new ActionRowBuilder().addComponents(select);
+    
+    try {
+        const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
+        if (messages) {
+            const panelMsg = messages.find(m => m.author.id === client.user.id && m.components?.some(r => r.components?.some(c => c.customId === 'staff_application_select')));
+            if (panelMsg) {
+                await panelMsg.edit({ embeds: [embed], components: [row] }).catch(() => {});
+                return;
+            }
+        }
+    } catch {}
+    
+    await channel.send({ embeds: [embed], components: [row] }).catch(() => {});
+}
+
+// =================================================================================
+// --- دالة تحديث لوحة الإعلانات ---
+// =================================================================================
+
+async function refreshAdvertisementPanel(client, channelId) {
+    if (!channelId) return;
+    const channel = await client.channels.fetch(channelId).catch(() => null);
+    if (!channel || channel.type !== ChannelType.GuildText) return;
+    
+    const ADS_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1459304373753745584/1459670684958593167/45_20260106190635.png?ex=69641fc2&is=6962ce42&hm=170c0ec7a950923941ac5da01c4a777c2ab66c693a337206a114334d715fffc6&=&format=webp&quality=lossless&width=2797&height=746';
+    const embed = new EmbedBuilder().setColor(0x808080).setTitle('تيكيت الاعلانات').setImage(ADS_PANEL_IMAGE);
+    
+    const select = new StringSelectMenuBuilder()
+        .setCustomId('advertisement_panel_select')
+        .setPlaceholder('اختر نوع التذكرة')
+        .addOptions([
+            { label: 'تيكت الاعلان', value: 'create_ad_ticket', emoji: { id: '1421961116111601755', name: 'IMG_1638' } },
+            { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
+        ]);
+
+    const row = new ActionRowBuilder().addComponents(select);
+    
+    try {
+        const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
+        if (messages) {
+            const panelMsg = messages.find(m => m.author.id === client.user.id && m.components?.some(r => r.components?.some(c => c.customId === 'advertisement_panel_select')));
+            if (panelMsg) {
+                await panelMsg.edit({ embeds: [embed], components: [row] }).catch(() => {});
+                return;
+            }
+        }
+    } catch {}
+    
+    await channel.send({ embeds: [embed], components: [row] }).catch(() => {});
+}
+
+// =================================================================================
+// --- دالة إنشاء التذاكر ---
+// =================================================================================
+
+async function createTicket(interaction, type, roleId, categoryId, embedDetails) {
+    const guild = interaction.guild;
+    const opener = interaction.user;
+    
+    await interaction.deferReply({ ephemeral: true });
+    
+    const channelName = `${type}-${opener.username}`.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 90);
+    
+    const existingChannel = guild.channels.cache.find(ch => ch.name === channelName && ch.parentId === categoryId);
+    if (existingChannel) {
+        await interaction.editReply({ content: `لديك بالفعل تذكرة من هذا النوع مفتوحة: ${existingChannel}` });
+        return;
+    }
+
+    const targetRole = guild.roles.cache.get(roleId);
+    const permissionOverwrites = [
+        { id: guild.roles.everyone, deny: [PermissionFlagsBits.ViewChannel] },
+        { id: opener.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
+        ...(targetRole ? [{ id: targetRole.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] }] : [{ id: roleId, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] }]),
+    ];
+
+    const ticketChannel = await guild.channels.create({
+        name: channelName,
+        type: ChannelType.GuildText,
+        parent: categoryId,
+        permissionOverwrites,
+        reason: `Ticket opened by ${opener.tag} (${type})`,
+    });
+
+    const infoEmbed = new EmbedBuilder()
+        .setColor(embedDetails.color || 0x808080)
+        .setTitle(embedDetails.title)
+        .setImage(embedDetails.image)
+        .setDescription(`${opener} تم فتح تذكرتك بنجاح.`);
+    
+    const closeBtn = new ButtonBuilder().setCustomId('ticket_close').setLabel('حذف التيكيت').setStyle(ButtonStyle.Danger);
+    const claimBtn = new ButtonBuilder().setCustomId('ticket_claim').setLabel('استلام').setStyle(ButtonStyle.Primary);
+    const row = new ActionRowBuilder().addComponents(claimBtn, closeBtn);
+    
+    const mentionText = targetRole ? `${targetRole}` : `<@&${roleId}>`;
+    await ticketChannel.send({ content: `${mentionText}\n${opener}`, embeds: [infoEmbed], components: [row] });
+    
+    await interaction.editReply({ content: `تم إنشاء تذكرتك: ${ticketChannel}` });
+}
+
+// =================================================================================
 // --- الدالة الرئيسية لتشغيل البوت ---
+// =================================================================================
+
 async function startBot() {
     console.log('--- بدء عملية تسجيل الأوامر ---');
     const commandsRegistered = await registerCommands();
@@ -356,42 +485,13 @@ async function startBot() {
 
     loadCommands(client);
 
-    async function refreshTicketPanel(channelId) {
-        if (!channelId) return;
-        const channel = await client.channels.fetch(channelId).catch(() => null);
-        if (!channel || channel.type !== ChannelType.GuildText) return;
-        
-        const PANEL_IMAGE = 'https://cdn.discordapp.com/attachments/1438037917124788267/1438521792296652800/Picsart_25-10-16_13-18-43-513.jpg?ex=69172f51&is=6915ddd1&hm=11fe8fbf7548e562ec12486d86dd5432923a9796582c42275bec8742ca9e157b&';
-        const embed = new EmbedBuilder().setColor(0x808080).setTitle('تذكره الدعم الفني').setImage(PANEL_IMAGE);
-        
-        const select = new StringSelectMenuBuilder()
-            .setCustomId('ticket_select')
-            .setPlaceholder('اختر نوع التذكرة')
-            .addOptions([
-                { label: 'الدعم الفني', value: 'support', emoji: { id: '1386132899874472098', name: 'estaff_ds' } },
-                { label: 'ريوارد', value: 'reward', emoji: { id: '1434107495722520617', name: '1531vslgiveaway' } },
-                { label: 'إعلان', value: 'advertisement', emoji: '📢' },
-                { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
-            ]);
-
-        const row = new ActionRowBuilder().addComponents(select);
-        
-        try {
-            const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
-            if (messages) {
-                const panelMsg = messages.find(m => m.author.id === client.user.id && m.components?.some(r => r.components?.some(c => c.customId === 'ticket_select')));
-                if (panelMsg) {
-                    await panelMsg.edit({ embeds: [embed], components: [row] }).catch(() => {});
-                    return;
-                }
-            }
-        } catch {}
-        
-        await channel.send({ embeds: [embed], components: [row] }).catch(() => {});
-    }
+    // =================================================================================
+    // --- معالج التفاعلات (Interaction Handler) ---
+    // =================================================================================
 
     client.on(Events.InteractionCreate, async interaction => {
         try {
+            // معالجة الأوامر Slash Commands
             if (interaction.isChatInputCommand()) {
                 const command = client.commands.get(interaction.commandName);
                 if (!command) {
@@ -403,6 +503,7 @@ async function startBot() {
                 return;
             }
             
+            // معالجة قائمة الإعلانات
             if (interaction.isStringSelectMenu() && interaction.customId === 'advertisement_panel_select') {
                 const guild = interaction.guild;
                 const opener = interaction.user;
@@ -457,9 +558,7 @@ async function startBot() {
                 }
             }
             
-            // =================================================================================
-            // --- نظام التقديم على الإدارة (نظام التذكرة القديم) ---
-            // =================================================================================
+            // معالجة قائمة التقديم على الإدارة
             if (interaction.isStringSelectMenu() && interaction.customId === 'staff_application_select') {
                 const opener = interaction.user;
                 const selectedValue = interaction.values[0];
@@ -492,8 +591,7 @@ async function startBot() {
                         return;
                     }
 
-                    // فتح تذكرة للتقديم
-                    const staffCategoryId = '1397022492090171392'; // نفس category التذاكر
+                    const staffCategoryId = '1397022492090171392';
                     const channelName = `staff-${opener.username}`.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 90);
                     
                     const existingChannel = targetGuild.channels.cache.find(ch => ch.name === channelName && ch.parentId === staffCategoryId);
@@ -534,13 +632,9 @@ async function startBot() {
                     return;
                 }
             }
-            // =================================================================================
-            // --- نهاية نظام التقديم على الإدارة ---
-            // =================================================================================
 
+            // معالجة قائمة التذاكر الرئيسية
             if (interaction.isStringSelectMenu() && interaction.customId === 'ticket_select') {
-                const guild = interaction.guild;
-                const opener = interaction.user;
                 const selectedValue = interaction.values[0];
 
                 if (selectedValue === 'reset_menu') {
@@ -548,50 +642,8 @@ async function startBot() {
                     return;
                 }
                 
-                async function createTicket(type, roleId, categoryId, embedDetails) {
-                    await interaction.deferReply({ ephemeral: true });
-                    
-                    const channelName = `${type}-${opener.username}`.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 90);
-                    
-                    const existingChannel = guild.channels.cache.find(ch => ch.name === channelName && ch.parentId === categoryId);
-                    if (existingChannel) {
-                        await interaction.editReply({ content: `لديك بالفعل تذكرة من هذا النوع مفتوحة: ${existingChannel}` });
-                        return;
-                    }
-
-                    const targetRole = guild.roles.cache.get(roleId);
-                    const permissionOverwrites = [
-                        { id: guild.roles.everyone, deny: [PermissionFlagsBits.ViewChannel] },
-                        { id: opener.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
-                        ...(targetRole ? [{ id: targetRole.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] }] : [{ id: roleId, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] }]),
-                    ];
-
-                    const ticketChannel = await guild.channels.create({
-                        name: channelName,
-                        type: ChannelType.GuildText,
-                        parent: categoryId,
-                        permissionOverwrites,
-                        reason: `Ticket opened by ${opener.tag} (${type})`,
-                    });
-
-                    const infoEmbed = new EmbedBuilder()
-                        .setColor(embedDetails.color || 0x808080)
-                        .setTitle(embedDetails.title)
-                        .setImage(embedDetails.image)
-                        .setDescription(`${opener} تم فتح تذكرتك بنجاح.`);
-                    
-                    const closeBtn = new ButtonBuilder().setCustomId('ticket_close').setLabel('حذف التيكيت').setStyle(ButtonStyle.Danger);
-                    const claimBtn = new ButtonBuilder().setCustomId('ticket_claim').setLabel('استلام').setStyle(ButtonStyle.Primary);
-                    const row = new ActionRowBuilder().addComponents(claimBtn, closeBtn);
-                    
-                    const mentionText = targetRole ? `${targetRole}` : `<@&${roleId}>`;
-                    await ticketChannel.send({ content: `${mentionText}\n${opener}`, embeds: [infoEmbed], components: [row] });
-                    
-                    await interaction.editReply({ content: `تم إنشاء تذكرتك: ${ticketChannel}` });
-                }
-
                 if (selectedValue === 'support') {
-                    await createTicket('ticket', '1419306051164966964', '1397022492090171392', {
+                    await createTicket(interaction, 'ticket', '1419306051164966964', '1397022492090171392', {
                         title: 'الرجاء انتظار الدعم الفني',
                         image: 'https://media.discordapp.net/attachments/1397093949071687700/1433739302856294461/Picsart_25-10-16_13-18-43-513.jpg?ex=6905c947&is=690477c7&hm=cc9c64f687d99cf07fc18e898d1eaaf70f27b472a0fe9901069c9be26cd69f9e&=&format=webp&width=2797&height=933',
                         color: 0x808080
@@ -600,7 +652,7 @@ async function startBot() {
                 }
                 
                 if (selectedValue === 'reward') {
-                    await createTicket('reward', '1419306155145953400', '1397022492090171392', {
+                    await createTicket(interaction, 'reward', '1419306155145953400', '1397022492090171392', {
                         title: 'تذكرة الريوارد',
                         image: 'https://media.discordapp.net/attachments/1433832273538711612/1434112148648235118/Picsart_25-10-16_13-18-43-513.jpg?ex=69072484&is=6905d304&hm=f2f1f426cdbf67c07f95db5e9d0339d476110baba8bd10fc40ea4c686e905b80&=&format=webp&width=2615&height=872',
                         color: 0x808080
@@ -609,6 +661,7 @@ async function startBot() {
                 }
             }
 
+            // معالجة زر الاستلام
             if (interaction.isButton() && interaction.customId === 'ticket_claim') {
                 const member = interaction.member;
                 const channel = interaction.channel;
@@ -646,6 +699,7 @@ async function startBot() {
                 }
             }
 
+            // معالجة زر الإغلاق
             if (interaction.isButton() && interaction.customId === 'ticket_close') {
                 const channel = interaction.channel;
                 
@@ -724,95 +778,18 @@ async function startBot() {
             }
 
         } catch (error) {
-            console.error('An error occurred in InteractionCreate:', error);
+            console.error('حدث خطأ في معالج التفاعلات:', error);
             if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: 'حدث خطأ أثناء تنفيذ هذا الأمر!', ephemeral: true });
+                await interaction.followUp({ content: 'حدث خطأ أثناء تنفيذ هذا الأمر!', ephemeral: true }).catch(() => {});
             } else {
-                await interaction.reply({ content: 'حدث خطأ أثناء تنفيذ هذا الأمر!', ephemeral: true });
+                await interaction.reply({ content: 'حدث خطأ أثناء تنفيذ هذا الأمر!', ephemeral: true }).catch(() => {});
             }
         }
     });
 
-    async function refreshStaffApplicationPanel(channelId) {
-        if (!channelId) return;
-        const channel = await client.channels.fetch(channelId).catch(() => null);
-        if (!channel || channel.type !== ChannelType.GuildText) return;
-        
-        const STAFF_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1433832273538711612/1436075334565888010/image.png?ex=690e48e0&is=690cf760&hm=88ebb29ea8c00615c80da44823be56fd7d06367e88e4fb21980e1af0b7f543e0&=&format=webp&quality=lossless&width=963&height=320';
-        const embed = new EmbedBuilder().setColor(0x808080).setTitle('تقديم إدارة').setImage(STAFF_PANEL_IMAGE);
-        const select = new StringSelectMenuBuilder()
-            .setCustomId('staff_application_select')
-            .setPlaceholder('اختر للتقديم')
-            .addOptions([
-                { label: 'تقديم اداره', value: 'staff_application', emoji: { id: '1386133151574654976', name: 'staff' } },
-                { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
-            ]);
-        const row = new ActionRowBuilder().addComponents(select);
-        
-        try {
-            const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
-            if (messages) {
-                const panelMsg = messages.find(m => m.author.id === client.user.id && m.components?.some(r => r.components?.some(c => c.customId === 'staff_application_select')));
-                if (panelMsg) {
-                    await panelMsg.edit({ embeds: [embed], components: [row] }).catch(() => {});
-                    return;
-                }
-            }
-        } catch {}
-        
-        await channel.send({ embeds: [embed], components: [row] }).catch(() => {});
-    }
-
-    async function refreshAdvertisementPanel(channelId) {
-        if (!channelId) return;
-        const channel = await client.channels.fetch(channelId).catch(() => null);
-        if (!channel || channel.type !== ChannelType.GuildText) return;
-        
-        const ADS_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1459304373753745584/1459670684958593167/45_20260106190635.png?ex=69641fc2&is=6962ce42&hm=170c0ec7a950923941ac5da01c4a777c2ab66c693a337206a114334d715fffc6&=&format=webp&quality=lossless&width=2797&height=746';
-        const embed = new EmbedBuilder().setColor(0x808080).setTitle('تيكيت الاعلانات').setImage(ADS_PANEL_IMAGE);
-        
-        const select = new StringSelectMenuBuilder()
-            .setCustomId('advertisement_panel_select')
-            .setPlaceholder('اختر نوع التذكرة')
-            .addOptions([
-                { label: 'تيكت الاعلان', value: 'create_ad_ticket', emoji: { id: '1421961116111601755', name: 'IMG_1638' } },
-                { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
-            ]);
-
-        const row = new ActionRowBuilder().addComponents(select);
-        
-        try {
-            const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
-            if (messages) {
-                const panelMsg = messages.find(m => m.author.id === client.user.id && m.components?.some(r => r.components?.some(c => c.customId === 'advertisement_panel_select')));
-                if (panelMsg) {
-                    await panelMsg.edit({ embeds: [embed], components: [row] }).catch(() => {});
-                    return;
-                }
-            }
-        } catch {}
-        
-        await channel.send({ embeds: [embed], components: [row] }).catch(() => {});
-    }
-
-    client.once(Events.ClientReady, async c => {
-        console.log(`✅✅✅ تم تسجيل الدخول باسم ${c.user.tag} والبوت جاهز للعمل!`);
-        
-        const panelChannelId = process.env.TICKET_PANEL_CHANNEL_ID;
-        await refreshTicketPanel(panelChannelId);
-        
-        const staffPanelChannelId = '1397092707687727204';
-        await refreshStaffApplicationPanel(staffPanelChannelId);
-        
-        const advertisementPanelChannelId = '1397022589825843452';
-        await refreshAdvertisementPanel(advertisementPanelChannelId);
-        
-        console.log('✅ تم تحديث جميع panels التيكيت');
-        
-        // =================================================================================
-        // --- نظام الفحص الدوري للإداريين (كل 6 ساعات) ---
-        // =================================================================================
-       
+    // =================================================================================
+    // --- معالج تحديث الأعضاء (لحفظ الألقاب) ---
+    // =================================================================================
 
     client.on(Events.GuildMemberUpdate, (oldMember, newMember) => {
         if (oldMember.nickname !== newMember.nickname) {
@@ -821,24 +798,20 @@ async function startBot() {
     });
 
     // =================================================================================
-    // --- نظام الردود التلقائية ---
+    // --- معالج الرسائل (للردود التلقائية ووضع DND) ---
     // =================================================================================
+
     client.on(Events.MessageCreate, async message => {
-        // تجاهل رسائل البوتات
         if (message.author.bot) return;
 
         try {
-            // =================================================================================
-            // --- نظام وضع لا تزعجه (DND Mode) ---
-            // =================================================================================
             const ALLOWED_USER_ID = '1438036495838609471';
             const messageContent = message.content.trim();
 
-            // معالجة أوامر تفعيل/تعطيل وضع لا تزعجه
+            // معالجة أوامر وضع لا تزعجه
             if (messageContent === '-on' || messageContent === '-off') {
-                // التحقق من أن المستخدم هو الشخص المصرح له فقط
                 if (message.author.id !== ALLOWED_USER_ID) {
-                    return; // تجاهل الأمر إذا لم يكن المستخدم المصرح له
+                    return;
                 }
 
                 if (messageContent === '-on') {
@@ -852,38 +825,33 @@ async function startBot() {
                 }
             }
 
-            // معالجة ذكر البوت عندما يكون الوضع مفعّل
+            // معالجة ذكر البوت في وضع DND
             if (isDndModeEnabled() && message.mentions.has(client.user)) {
                 const boxName = message.author.globalName || message.author.username;
                 await message.reply(`**${boxName}** حالياً لا تزعجه`);
                 return;
             }
-            // =================================================================================
-            // --- نهاية نظام وضع لا تزعجه ---
-            // =================================================================================
 
-            // 1. إرسال رسالة تلقائية في رومات محددة
+            // إرسال رسالة تلقائية في رومات محددة
             if (AUTO_MESSAGE_CHANNELS.includes(message.channel.id)) {
                 await message.channel.send(AUTO_MESSAGE_IMAGE);
                 return;
             }
 
-            // 2. الردود التلقائية (فقط لمن يملك الرول المحدد)
+            // الردود التلقائية (فقط لمن يملك الرول المحدد)
             const member = message.member;
             if (!member) return;
 
-            // التحقق من وجود الرول
             if (!member.roles.cache.has(AUTO_REPLY_ROLE_ID)) return;
 
             // الرد على كلمة "خط"
             if (messageContent === 'خط') {
-                // حذف رسالة المستخدم أولاً
                 await message.delete().catch(err => console.error('فشل حذف رسالة "خط":', err));
-                // إرسال الرد
                 await message.channel.send(AUTO_MESSAGE_IMAGE);
                 return;
             }
 
+            // الرد على كلمة "فراغ"
             if (messageContent === 'فراغ') {
                 await message.delete().catch(err => console.error('فشل حذف رسالة "فراغ":', err));
                 await message.channel.send(FARAGH_REPLY);
@@ -894,8 +862,29 @@ async function startBot() {
             console.error('خطأ في نظام الردود التلقائية:', error);
         }
     });
-   
+
+    // =================================================================================
+    // --- معالج جاهزية البوت ---
+    // =================================================================================
+
+    client.once(Events.ClientReady, async c => {
+        console.log(`✅✅✅ تم تسجيل الدخول باسم ${c.user.tag} والبوت جاهز للعمل!`);
+        
+        const panelChannelId = process.env.TICKET_PANEL_CHANNEL_ID;
+        await refreshTicketPanel(client, panelChannelId);
+        
+        const staffPanelChannelId = '1397092707687727204';
+        await refreshStaffApplicationPanel(client, staffPanelChannelId);
+        
+        const advertisementPanelChannelId = '1397022589825843452';
+        await refreshAdvertisementPanel(client, advertisementPanelChannelId);
+        
+        console.log('✅ تم تحديث جميع panels التيكيت');
+    });
+
+    // تسجيل الدخول
     client.login(process.env.DISCORD_TOKEN);
 }
 
+// تشغيل البوت
 startBot();
