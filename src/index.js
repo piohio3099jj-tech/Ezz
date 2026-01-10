@@ -384,7 +384,7 @@ async function refreshAdvertisementPanel(client, channelId) {
     if (!channel || channel.type !== ChannelType.GuildText) return;
     
     const ADS_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1459304373753745584/1459670684958593167/45_20260106190635.png?ex=69641fc2&is=6962ce42&hm=170c0ec7a950923941ac5da01c4a777c2ab66c693a337206a114334d715fffc6&=&format=webp&quality=lossless&width=2797&height=746';
-    const embed = new EmbedBuilder().setColor(0x808080).setTitle('تيكيت الاعلانات').setImage(ADS_PANEL_IMAGE);
+    const embed = new EmbedBuilder().setColor(0x808080).setTitle('تكت الإعلانات').setImage(ADS_PANEL_IMAGE);
     
     const select = new StringSelectMenuBuilder()
         .setCustomId('advertisement_panel_select')
