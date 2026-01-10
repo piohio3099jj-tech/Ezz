@@ -543,7 +543,7 @@ async function startBot() {
                     const ADS_TICKET_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1438581879270932601/Picsart_25-10-16_13-18-24-693.jpg?ex=691ff907&is=691ea787&hm=c582f8003a90f74f28e482e73473f43c0eb825d1ce8b82aef31c97b09a5a564b&=&format=webp&width=2615&height=872';
                     
                     const infoEmbed = new EmbedBuilder()
-                        .setColor(0x808080)
+                        .setColor(4169E1)
                         .setTitle('📢 تذكرة إعلان')
                         .setImage(ADS_TICKET_IMAGE)
                         .setDescription(`${opener} تم فتح تذكرة الإعلان بنجاح.\n\nسيتم الرد عليك قريباً من قبل فريق الإدارة.`);
