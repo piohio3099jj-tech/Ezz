@@ -768,7 +768,7 @@ async function startBot() {
         const channel = await client.channels.fetch(channelId).catch(() => null);
         if (!channel || channel.type !== ChannelType.GuildText) return;
         
-        const ADS_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1438581879270932601/Picsart_25-10-16_13-18-24-693.jpg?ex=691ff907&is=691ea787&hm=c582f8003a90f74f28e482e73473f43c0eb825d1ce8b82aef31c97b09a5a564b&=&format=webp&width=2615&height=872';
+        const ADS_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1459304373753745584/1459670684958593167/45_20260106190635.png?ex=69641fc2&is=6962ce42&hm=170c0ec7a950923941ac5da01c4a777c2ab66c693a337206a114334d715fffc6&=&format=webp&quality=lossless&width=2797&height=746';
         const embed = new EmbedBuilder().setColor(0x808080).setTitle('تيكيت الاعلانات').setImage(ADS_PANEL_IMAGE);
         
         const select = new StringSelectMenuBuilder()
