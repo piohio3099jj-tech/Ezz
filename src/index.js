@@ -390,7 +390,7 @@ async function refreshAdvertisementPanel(client, channelId) {
         .setCustomId('advertisement_panel_select')
         .setPlaceholder('اختر نوع التذكرة')
         .addOptions([
-            { label: 'تيكت الاعلان', value: 'create_ad_ticket', emoji: { id: '1421961116111601755', name: 'IMG_1638' } },
+            { label: 'تيكت الاعلان', value: 'create_ad_ticket', emoji: { id: '1459674856915206390', name: 'ad' } },
             { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
         ]);
 
