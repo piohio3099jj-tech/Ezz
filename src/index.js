@@ -207,7 +207,7 @@ const AUTO_MESSAGE_CHANNELS = [
     '1435008789739733232'
 ];
 
-const AUTO_MESSAGE_IMAGE = 'https://media.discordapp.net/attachments/1397095407745499196/1429784555220369408/standard_1.gif?ex=6917b2e2&is=69166162&hm=d9ac58c76a495fe426dad08596c359de085cea4ddc847a8c258611602f38d9b5&width=2797&height=163&';
+const AUTO_MESSAGE_IMAGE = 'https://media.discordapp.net/attachments/1440038883164295249/1458552604488372375/lv_0_.gif?ex=696402f7&is=6962b177&hm=6e67c2547b5c395c793b494283716dfaa94f4e44b90de8b3798a581d42a1007c&=&width=1992&height=98';
 
 const AUTO_REPLY_ROLE_ID = '1418942792121585724';
 
@@ -312,7 +312,7 @@ async function refreshTicketPanel(client, channelId) {
     if (!channel || channel.type !== ChannelType.GuildText) return;
     
     const PANEL_IMAGE = 'https://cdn.discordapp.com/attachments/1438037917124788267/1438521792296652800/Picsart_25-10-16_13-18-43-513.jpg?ex=69172f51&is=6915ddd1&hm=11fe8fbf7548e562ec12486d86dd5432923a9796582c42275bec8742ca9e157b&';
-    const embed = new EmbedBuilder().setColor(0x808080).setTitle('تذكره الدعم الفني').setImage(PANEL_IMAGE);
+    const embed = new EmbedBuilder().setColor(4169E1).setTitle('تذكره الدعم الفني').setImage(PANEL_IMAGE);
     
     const select = new StringSelectMenuBuilder()
         .setCustomId('ticket_select')
@@ -350,7 +350,7 @@ async function refreshStaffApplicationPanel(client, channelId) {
     if (!channel || channel.type !== ChannelType.GuildText) return;
     
     const STAFF_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1433832273538711612/1436075334565888010/image.png?ex=690e48e0&is=690cf760&hm=88ebb29ea8c00615c80da44823be56fd7d06367e88e4fb21980e1af0b7f543e0&=&format=webp&quality=lossless&width=963&height=320';
-    const embed = new EmbedBuilder().setColor(0x808080).setTitle('تقديم إدارة').setImage(STAFF_PANEL_IMAGE);
+    const embed = new EmbedBuilder().setColor(4169E1).setTitle('تقديم إدارة').setImage(STAFF_PANEL_IMAGE);
     const select = new StringSelectMenuBuilder()
         .setCustomId('staff_application_select')
         .setPlaceholder('اختر للتقديم')
@@ -384,7 +384,7 @@ async function refreshAdvertisementPanel(client, channelId) {
     if (!channel || channel.type !== ChannelType.GuildText) return;
     
     const ADS_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1459304373753745584/1459670684958593167/45_20260106190635.png?ex=69641fc2&is=6962ce42&hm=170c0ec7a950923941ac5da01c4a777c2ab66c693a337206a114334d715fffc6&=&format=webp&quality=lossless&width=2797&height=746';
-    const embed = new EmbedBuilder().setColor(0x808080).setTitle('تكت الإعلانات').setImage(ADS_PANEL_IMAGE);
+    const embed = new EmbedBuilder().setColor(4169E1).setTitle('تكت الإعلانات').setImage(ADS_PANEL_IMAGE);
     
     const select = new StringSelectMenuBuilder()
         .setCustomId('advertisement_panel_select')
@@ -444,7 +444,7 @@ async function createTicket(interaction, type, roleId, categoryId, embedDetails)
     });
 
     const infoEmbed = new EmbedBuilder()
-        .setColor(embedDetails.color || 0x808080)
+        .setColor(embedDetails.color || 4169E1)
         .setTitle(embedDetails.title)
         .setImage(embedDetails.image)
         .setDescription(`${opener} تم فتح تذكرتك بنجاح.`);
@@ -617,7 +617,7 @@ async function startBot() {
                     const STAFF_TICKET_IMAGE = 'https://media.discordapp.net/attachments/1433832273538711612/1436075334565888010/image.png?ex=690e48e0&is=690cf760&hm=88ebb29ea8c00615c80da44823be56fd7d06367e88e4fb21980e1af0b7f543e0&=&format=webp&quality=lossless&width=963&height=320';
                     
                     const infoEmbed = new EmbedBuilder()
-                        .setColor(0x808080)
+                        .setColor(4169E1)
                         .setTitle('تقديم إدارة')
                         .setImage(STAFF_TICKET_IMAGE)
                         .setDescription(`${opener} تم فتح تذكرة التقديم على الإدارة بنجاح.\n\nسيتم الرد عليك قريباً من قبل فريق الإدارة.`);
@@ -646,7 +646,7 @@ async function startBot() {
                     await createTicket(interaction, 'ticket', '1419306051164966964', '1397022492090171392', {
                         title: 'الرجاء انتظار الدعم الفني',
                         image: 'https://media.discordapp.net/attachments/1397093949071687700/1433739302856294461/Picsart_25-10-16_13-18-43-513.jpg?ex=6905c947&is=690477c7&hm=cc9c64f687d99cf07fc18e898d1eaaf70f27b472a0fe9901069c9be26cd69f9e&=&format=webp&width=2797&height=933',
-                        color: 0x808080
+                        color: 4169E1
                     });
                     return;
                 }
@@ -655,7 +655,7 @@ async function startBot() {
                     await createTicket(interaction, 'reward', '1419306155145953400', '1397022492090171392', {
                         title: 'تذكرة الريوارد',
                         image: 'https://media.discordapp.net/attachments/1433832273538711612/1434112148648235118/Picsart_25-10-16_13-18-43-513.jpg?ex=69072484&is=6905d304&hm=f2f1f426cdbf67c07f95db5e9d0339d476110baba8bd10fc40ea4c686e905b80&=&format=webp&width=2615&height=872',
-                        color: 0x808080
+                        color: 4169E1
                     });
                     return;
                 }
