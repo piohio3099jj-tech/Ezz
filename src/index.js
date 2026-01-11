@@ -900,7 +900,88 @@ async function startBot() {
             const messageContent = message.content.trim();
 
             // معالجة أوامر البريفكس
-            if (messageContent.startsWith(')) {
+            if (messageContent.startsWith('
+
+            // معالجة أوامر وضع لا تزعجه
+            if (messageContent === '-on' || messageContent === '-off') {
+                if (message.author.id !== SUPER_ADMIN_ID) {
+                    return;
+                }
+
+                if (messageContent === '-on') {
+                    setDndMode(true);
+                    await message.reply('✅ تم تفعيل وضع لا تزعجه. البوت لن يرد على المنشنات حالياً.');
+                    return;
+                } else if (messageContent === '-off') {
+                    setDndMode(false);
+                    await message.reply('❌ تم تعطيل وضع لا تزعجه. البوت سيرد على المنشنات الآن.');
+                    return;
+                }
+            }
+
+            // معالجة ذكر البوت في وضع DND
+            if (isDndModeEnabled() && message.mentions.has(client.user)) {
+                const boxName = message.author.globalName || message.author.username;
+                await message.reply(`**${boxName}** حالياً لا تزعجه`);
+                return;
+            }
+
+            // إرسال رسالة تلقائية في رومات محددة
+            if (AUTO_MESSAGE_CHANNELS.includes(message.channel.id)) {
+                await message.channel.send(AUTO_MESSAGE_IMAGE);
+                return;
+            }
+
+            // الردود التلقائية (فقط لمن يملك الرول المحدد)
+            const member = message.member;
+            if (!member) return;
+
+            if (!member.roles.cache.has(AUTO_REPLY_ROLE_ID)) return;
+
+            // الرد على كلمة "خط"
+            if (messageContent === 'خط') {
+                await message.delete().catch(err => console.error('فشل حذف رسالة "خط":', err));
+                await message.channel.send(AUTO_MESSAGE_IMAGE);
+                return;
+            }
+
+            // الرد على كلمة "فراغ"
+            if (messageContent === 'فراغ') {
+                await message.delete().catch(err => console.error('فشل حذف رسالة "فراغ":', err));
+                await message.channel.send(FARAGH_REPLY);
+                return;
+            }
+
+        } catch (error) {
+            console.error('خطأ في نظام الردود التلقائية:', error);
+        }
+    });
+
+    // =================================================================================
+    // --- معالج جاهزية البوت ---
+    // =================================================================================
+
+    client.once(Events.ClientReady, async c => {
+        console.log(`✅✅✅ تم تسجيل الدخول باسم ${c.user.tag} والبوت جاهز للعمل!`);
+        
+        const panelChannelId = process.env.TICKET_PANEL_CHANNEL_ID;
+        await refreshTicketPanel(client, panelChannelId);
+        
+        const staffPanelChannelId = '1397092707687727204';
+        await refreshStaffApplicationPanel(client, staffPanelChannelId);
+        
+        const advertisementPanelChannelId = '1397022589825843452';
+        await refreshAdvertisementPanel(client, advertisementPanelChannelId);
+        
+        console.log('✅ تم تحديث جميع panels التيكيت');
+    });
+
+    // تسجيل الدخول
+    client.login(process.env.DISCORD_TOKEN);
+}
+
+// تشغيل البوت
+startBot();)) {
                 const args = messageContent.slice(1).trim().split(/\s+/);
                 const commandName = args.shift().toLowerCase();
                 
