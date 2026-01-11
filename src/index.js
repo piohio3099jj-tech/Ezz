@@ -613,7 +613,7 @@ async function startBot() {
                     const permissionOverwrites = [
                         { id: guild.roles.everyone, deny: [PermissionFlagsBits.ViewChannel] },
                         { id: opener.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
-                        { id: '1419306155145953400', allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
+                        { id: '1432054713607782661', allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
                     ];
 
                     const ticketChannel = await guild.channels.create({
@@ -635,7 +635,7 @@ async function startBot() {
                     const closeBtn = new ButtonBuilder().setCustomId('ticket_close').setLabel('حذف التيكيت').setStyle(ButtonStyle.Danger);
                     const row = new ActionRowBuilder().addComponents(closeBtn);
                     
-                    await ticketChannel.send({ content: `<@&1419306155145953400>\n${opener}`, embeds: [infoEmbed], components: [row] });
+                    await ticketChannel.send({ content: `<@&1432054713607782661>\n${opener}`, embeds: [infoEmbed], components: [row] });
                     
                     await interaction.editReply({ content: `تم إنشاء تذكرة الإعلان: ${ticketChannel}` });
                     return;
@@ -736,7 +736,7 @@ async function startBot() {
                 }
                 
                 if (selectedValue === 'reward') {
-                    await createTicket(interaction, 'reward', '1419306155145953400', '1397022492090171392', {
+                    await createTicket(interaction, 'reward', '1432054713607782661', '1397022492090171392', {
                         title: 'تذكرة الريوارد',
                         image: 'https://media.discordapp.net/attachments/1433832273538711612/1434112148648235118/Picsart_25-10-16_13-18-43-513.jpg?ex=69072484&is=6905d304&hm=f2f1f426cdbf67c07f95db5e9d0339d476110baba8bd10fc40ea4c686e905b80&=&format=webp&width=2615&height=872',
                         color: 101056
