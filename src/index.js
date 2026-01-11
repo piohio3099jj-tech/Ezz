@@ -695,7 +695,7 @@ async function startBot() {
                     const permissionOverwrites = [
                         { id: targetGuild.roles.everyone, deny: [PermissionFlagsBits.ViewChannel] },
                         { id: opener.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
-                        { id: STAFF_ROLE_ID, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
+                        { id: '1433870948393685053', allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
                     ];
 
                     const ticketChannel = await targetGuild.channels.create({
@@ -900,7 +900,7 @@ async function startBot() {
             const messageContent = message.content.trim();
 
             // معالجة أوامر البريفكس
-if (messageContent.startsWith('$')) {
+            if (messageContent.startsWith(')) {
                 const args = messageContent.slice(1).trim().split(/\s+/);
                 const commandName = args.shift().toLowerCase();
                 
