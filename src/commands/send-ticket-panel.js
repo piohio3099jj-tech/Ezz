@@ -21,8 +21,12 @@ export default {
         }
 
         const embed = new EmbedBuilder()
-            .setColor(0x808080)
+            .setColor(0x0D1B2A) // أزرق غامق
             .setTitle('تذكرة الريوارد')
+            .setDescription(
+                '🎁 **لاستلام جوائز القيف أوايات والفعاليات**\n' +
+                'يرجى فتح تذكرة وسيتم تسليمك بأسرع وقت.'
+            )
             .setImage(PANEL_IMAGE);
 
         const select = new StringSelectMenuBuilder()
@@ -34,7 +38,6 @@ export default {
 
         const row = new ActionRowBuilder().addComponents(select);
 
-        // محاولة العثور على اللوحة الموجودة وتحديثها
         const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
         const existing = messages?.find(m => 
             m.author.id === interaction.client.user.id && 
