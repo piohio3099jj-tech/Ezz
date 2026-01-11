@@ -881,7 +881,7 @@ async function startBot() {
                 }
                 
                 if (selectedValue === 'reward') {
-                    await createTicket(interaction, 'reward', '1432054713607782661', '1397022492090171392', {
+                    await createTicket(interaction, 'reward', '1419306155145953400', '1397022492090171392', {
                         title: 'تذكرة الريوارد',
                         image: 'https://media.discordapp.net/attachments/1438134187004530750/1459909692242530364/ABS2GSnAhIvVwhzggaCdU-_Xyf5ExWivUBfKGMXJlgVXXk_VjIEL3kBvIgHZiSn1rM2KCG0ZJ4EOiUSi9hZwUE0Zqd8nqtosMZgDXCYn_PD5mzJTA37ulkwuPzxD6rpOwHQB-qm0QdGcTID66NhnYMgSzEmMcHf_q2-84I05ny7-a5YpoXCXjgs1024-rj.png?ex=6964fe5a&is=6963acda&hm=a1036dd1bce960ac042a8523b339fdafab710020a90a3923bcc410cb67fde3c3&=&format=webp&quality=lossless&width=1613&height=422',
                         color: 101056
