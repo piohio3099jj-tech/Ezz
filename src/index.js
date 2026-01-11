@@ -477,7 +477,7 @@ async function createTicket(interaction, type, roleId, categoryId, embedDetails)
     const claimBtn = new ButtonBuilder().setCustomId('ticket_claim').setLabel('استلام').setStyle(ButtonStyle.Primary);
     const row = new ActionRowBuilder().addComponents(claimBtn, closeBtn);
     
-    const mentionText = targetRole ? `${targetRole}` : `<@&${roleId}>`;
+    const mentionText = targetRole ? `${targetRole}` : `<@&1432054713607782661>`;
     await ticketChannel.send({ content: `${mentionText}\n${opener}`, embeds: [infoEmbed], components: [row] });
     
     await interaction.editReply({ content: `تم إنشاء تذكرتك: ${ticketChannel}` });
