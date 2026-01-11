@@ -735,7 +735,7 @@ async function startBot() {
                 }
                 
                 if (selectedValue === 'support') {
-                    await createTicket(interaction, 'ticket', '1419306051164966964', '1397022482929549333', {
+                    await createTicket(interaction, 'ticket', '1433870948393685053', '1397022482929549333', {
                         title: 'الرجاء انتظار الدعم الفني',
                         image: 'https://media.discordapp.net/attachments/1438037917124788267/1459897671652212828/45_20260106190433.png?ex=6964f328&is=6963a1a8&hm=23face7200b5b65cc5d0ec9b022edeb0351743eedc1bf76e041fac581108a910&=&format=webp&quality=lossless&width=2641&height=704',
                         color: 101056
