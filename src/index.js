@@ -683,7 +683,7 @@ async function startBot() {
                         return;
                     }
 
-                    const staffCategoryId = '1397022492090171392';
+                    const staffCategoryId = '1397022482929549333';
                     const channelName = `staff-${opener.username}`.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 90);
                     
                     const existingChannel = targetGuild.channels.cache.find(ch => ch.name === channelName && ch.parentId === staffCategoryId);
