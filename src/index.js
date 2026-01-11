@@ -442,6 +442,87 @@ async function refreshAdvertisementPanel(client, channelId) {
 }
 
 // =================================================================================
+// --- دالة تحديث لوحة التذكرة (Support Panel) ---
+// =================================================================================
+
+async function refreshSupportPanel(client, channelId) {
+    if (!channelId) return;
+    const channel = await client.channels.fetch(channelId).catch(() => null);
+    if (!channel || channel.type !== ChannelType.GuildText) return;
+    
+    const SUPPORT_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1459304373753745584/1459924972779601995/Gemini_Generated_Image_8f9oq28f9oq28f9o.png?ex=69650c95&is=6963bb15&hm=ec3dd0f0718ffc67f45957f9ee72a1955889c22c8b528833cff1cf8e2b3ed247&=&format=webp&quality=lossless&width=2805&height=740';
+    
+    const embed = new EmbedBuilder()
+        .setColor(0x000080) // أزرق غامق
+        .setTitle('التذكرة')
+        .setDescription('لحل مشاكلك و استفساراتك')
+        .setImage(SUPPORT_PANEL_IMAGE);
+    
+    const select = new StringSelectMenuBuilder()
+        .setCustomId('support_ticket_select')
+        .setPlaceholder('اختر نوع التذكرة')
+        .addOptions([
+            { label: 'الدعم الفني', value: 'create_support_ticket', emoji: '🎯' },
+            { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
+        ]);
+
+    const row = new ActionRowBuilder().addComponents(select);
+    
+    try {
+        const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
+        if (messages) {
+            const panelMsg = messages.find(m => m.author.id === client.user.id && m.components?.some(r => r.components?.some(c => c.customId === 'support_ticket_select')));
+            if (panelMsg) {
+                await panelMsg.edit({ embeds: [embed], components: [row] }).catch(() => {});
+                return;
+            }
+        }
+    } catch {}
+    
+    await channel.send({ embeds: [embed], components: [row] }).catch(() => {});
+}
+
+// =================================================================================
+// --- دالة تحديث لوحة تذكرة الإدارة ---
+// =================================================================================
+
+async function refreshAdminTicketPanel(client, channelId) {
+    if (!channelId) return;
+    const channel = await client.channels.fetch(channelId).catch(() => null);
+    if (!channel || channel.type !== ChannelType.GuildText) return;
+    
+    const ADMIN_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1438581877966508082/Picsart_25-10-16_13-18-43-513.jpg?ex=6963de47&is=69628cc7&hm=ae01f0247431ed4adc0c8b3abcd369ef3df8f06586e017e537c5e102dea644f1&=&format=webp&width=2641&height=880';
+    
+    const embed = new EmbedBuilder()
+        .setColor(0x000080)
+        .setTitle('تذكرة الإدارة')
+        .setImage(ADMIN_PANEL_IMAGE);
+    
+    const select = new StringSelectMenuBuilder()
+        .setCustomId('admin_ticket_select')
+        .setPlaceholder('اختر للتواصل مع الإدارة')
+        .addOptions([
+            { label: 'تذكرة الإدارة', value: 'create_admin_ticket', emoji: '👑' },
+            { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
+        ]);
+
+    const row = new ActionRowBuilder().addComponents(select);
+    
+    try {
+        const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
+        if (messages) {
+            const panelMsg = messages.find(m => m.author.id === client.user.id && m.components?.some(r => r.components?.some(c => c.customId === 'admin_ticket_select')));
+            if (panelMsg) {
+                await panelMsg.edit({ embeds: [embed], components: [row] }).catch(() => {});
+                return;
+            }
+        }
+    } catch {}
+    
+    await channel.send({ embeds: [embed], components: [row] }).catch(() => {});
+}
+
+// =================================================================================
 // --- دالة إنشاء التذاكر ---
 // =================================================================================
 
@@ -536,6 +617,63 @@ async function startBot() {
                 }
                 await command.execute(interaction);
                 return;
+            }
+            
+            // معالجة قائمة لوحة الدعم الفني الجديدة
+            if (interaction.isStringSelectMenu() && interaction.customId === 'support_ticket_select') {
+                const selectedValue = interaction.values[0];
+
+                if (selectedValue === 'reset_menu') {
+                    await interaction.deferUpdate();
+                    return;
+                }
+
+                if (selectedValue === 'create_support_ticket') {
+                    const guild = interaction.guild;
+                    const opener = interaction.user;
+
+                    await interaction.deferReply({ ephemeral: true });
+
+                    const supportCategoryId = '1397022492090171392';
+                    const channelName = `support-${opener.username}`.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 90);
+                    
+                    const existingChannel = guild.channels.cache.find(ch => ch.name === channelName && ch.parentId === supportCategoryId);
+                    if (existingChannel) {
+                        await interaction.editReply({ content: `لديك بالفعل تذكرة دعم مفتوحة: ${existingChannel}` });
+                        return;
+                    }
+
+                    const permissionOverwrites = [
+                        { id: guild.roles.everyone, deny: [PermissionFlagsBits.ViewChannel] },
+                        { id: opener.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
+                        { id: '1419306051164966964', allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
+                    ];
+
+                    const ticketChannel = await guild.channels.create({
+                        name: channelName,
+                        type: ChannelType.GuildText,
+                        parent: supportCategoryId,
+                        permissionOverwrites,
+                        reason: `Support ticket opened by ${opener.tag}`,
+                    });
+
+                    const SUPPORT_TICKET_IMAGE = 'https://media.discordapp.net/attachments/1459304373753745584/1459924972779601995/Gemini_Generated_Image_8f9oq28f9oq28f9o.png?ex=69650c95&is=6963bb15&hm=ec3dd0f0718ffc67f45957f9ee72a1955889c22c8b528833cff1cf8e2b3ed247&=&format=webp&quality=lossless&width=2805&height=740';
+                    
+                    const infoEmbed = new EmbedBuilder()
+                        .setColor(0x000080)
+                        .setTitle('تذكرة الدعم الفني')
+                        .setImage(SUPPORT_TICKET_IMAGE)
+                        .setDescription(`${opener} تم فتح تذكرة الدعم الفني بنجاح.\n\nسيتم الرد عليك قريباً من قبل فريق الإدارة.`);
+                    
+                    const closeBtn = new ButtonBuilder().setCustomId('ticket_close').setLabel('حذف التيكيت').setStyle(ButtonStyle.Danger);
+                    const claimBtn = new ButtonBuilder().setCustomId('ticket_claim').setLabel('استلام').setStyle(ButtonStyle.Primary);
+                    const row = new ActionRowBuilder().addComponents(claimBtn, closeBtn);
+                    
+                    await ticketChannel.send({ content: `<@&1419306051164966964>\n${opener}`, embeds: [infoEmbed], components: [row] });
+                    
+                    await interaction.editReply({ content: `تم إنشاء تذكرة الدعم: ${ticketChannel}` });
+                    return;
+                }
             }
             
             // معالجة قائمة تذكرة الإدارة الجديدة
@@ -897,6 +1035,43 @@ async function startBot() {
 
         try {
             const messageContent = message.content.trim();
+
+            // معالجة أمر إرسال لوحة التذكرة الجديدة (-ssend)
+            if (messageContent === '-ssend') {
+                const member = message.member;
+                if (!member || !member.permissions.has(PermissionFlagsBits.Administrator)) {
+                    return; // لا يرد إذا لم يكن لديه صلاحية
+                }
+
+                try {
+                    await refreshSupportPanel(client, message.channel.id);
+                    await message.delete().catch(() => {});
+                    console.log(`✅ تم إرسال لوحة التذكرة بواسطة ${message.author.tag}`);
+                } catch (error) {
+                    console.error('خطأ في إرسال لوحة التذكرة:', error);
+                    await message.reply('حدث خطأ أثناء إرسال اللوحة.').catch(() => {});
+                }
+                return;
+            }
+
+            // معالجة أمر إرسال لوحة تذكرة الإدارة (-sadminsend)
+            if (messageContent === '-sadminsend') {
+                const member = message.member;
+                if (!member || !member.permissions.has(PermissionFlagsBits.Administrator)) {
+                    return; // لا يرد إذا لم يكن لديه صلاحية
+                }
+
+                try {
+                    const adminPanelChannelId = '1397125375103860747';
+                    await refreshAdminTicketPanel(client, adminPanelChannelId);
+                    await message.delete().catch(() => {});
+                    console.log(`✅ تم إرسال لوحة تذكرة الإدارة بواسطة ${message.author.tag}`);
+                } catch (error) {
+                    console.error('خطأ في إرسال لوحة تذكرة الإدارة:', error);
+                    await message.reply('حدث خطأ أثناء إرسال اللوحة.').catch(() => {});
+                }
+                return;
+            }
 
             // معالجة أوامر البريفكس
             if (messageContent.startsWith('$')) {
