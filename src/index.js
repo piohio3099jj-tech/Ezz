@@ -373,7 +373,7 @@ async function refreshStaffApplicationPanel(client, channelId) {
     const channel = await client.channels.fetch(channelId).catch(() => null);
     if (!channel || channel.type !== ChannelType.GuildText) return;
     
-    const STAFF_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1433832273538711612/1436075334565888010/image.png?ex=690e48e0&is=690cf760&hm=88ebb29ea8c00615c80da44823be56fd7d06367e88e4fb21980e1af0b7f543e0&=&format=webp&quality=lossless&width=963&height=320';
+    const STAFF_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1459897671652212828/45_20260106190433.png?ex=6964f328&is=6963a1a8&hm=23face7200b5b65cc5d0ec9b022edeb0351743eedc1bf76e041fac581108a910&=&format=webp&quality=lossless&width=2641&height=704';
     const embed = new EmbedBuilder().setColor(101056).setTitle('تقديم إدارة').setImage(STAFF_PANEL_IMAGE);
     const select = new StringSelectMenuBuilder()
         .setCustomId('staff_application_select')
