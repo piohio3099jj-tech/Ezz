@@ -373,24 +373,23 @@ async function refreshStaffApplicationPanel(client, channelId) {
     const channel = await client.channels.fetch(channelId).catch(() => null);
     if (!channel || channel.type !== ChannelType.GuildText) return;
     
-   const STAFF_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1459897671652212828/45_20260106190433.png?ex=6964f328&is=6963a1a8&hm=23face7200b5b65cc5d0ec9b022edeb0351743eedc1bf76e041fac581108a910&=&format=webp&quality=lossless&width=2641&height=704';
+    const STAFF_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1459897671652212828/45_20260106190433.png?ex=6964f328&is=6963a1a8&hm=23face7200b5b65cc5d0ec9b022edeb0351743eedc1bf76e041fac581108a910&=&format=webp&quality=lossless&width=2641&height=704';
 
-const embed = new EmbedBuilder()
-    .setColor(101056)
-    .setTitle('تقديم إدارة')
-    .setDescription('📢 **النقل مفتوح حاليًا**')
-    .setImage(STAFF_PANEL_IMAGE);
+    const embed = new EmbedBuilder()
+        .setColor(101056)
+        .setTitle('تقديم إدارة')
+        .setDescription('📢 **النقل مفتوح حاليًا**')
+        .setImage(STAFF_PANEL_IMAGE);
 
-const select = new StringSelectMenuBuilder()
-    .setCustomId('staff_application_select')
-    .setPlaceholder('اختر للتقديم')
-    .addOptions([
-        { label: 'تقديم اداره', value: 'staff_application', emoji: '👥' },
-        { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
-    ]);
+    const select = new StringSelectMenuBuilder()
+        .setCustomId('staff_application_select')
+        .setPlaceholder('اختر للتقديم')
+        .addOptions([
+            { label: 'تقديم اداره', value: 'staff_application', emoji: '👥' },
+            { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
+        ]);
 
-const row = new ActionRowBuilder().addComponents(select);
-
+    const row = new ActionRowBuilder().addComponents(select);
     
     try {
         const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
@@ -900,87 +899,7 @@ async function startBot() {
             const messageContent = message.content.trim();
 
             // معالجة أوامر البريفكس
-if (messageContent.startsWith('$')) {
-            // معالجة أوامر وضع لا تزعجه
-            if (messageContent === '-on' || messageContent === '-off') {
-                if (message.author.id !== SUPER_ADMIN_ID) {
-                    return;
-                }
-
-                if (messageContent === '-on') {
-                    setDndMode(true);
-                    await message.reply('✅ تم تفعيل وضع لا تزعجه. البوت لن يرد على المنشنات حالياً.');
-                    return;
-                } else if (messageContent === '-off') {
-                    setDndMode(false);
-                    await message.reply('❌ تم تعطيل وضع لا تزعجه. البوت سيرد على المنشنات الآن.');
-                    return;
-                }
-            }
-
-            // معالجة ذكر البوت في وضع DND
-            if (isDndModeEnabled() && message.mentions.has(client.user)) {
-                const boxName = message.author.globalName || message.author.username;
-                await message.reply(`**${boxName}** حالياً لا تزعجه`);
-                return;
-            }
-
-            // إرسال رسالة تلقائية في رومات محددة
-            if (AUTO_MESSAGE_CHANNELS.includes(message.channel.id)) {
-                await message.channel.send(AUTO_MESSAGE_IMAGE);
-                return;
-            }
-
-            // الردود التلقائية (فقط لمن يملك الرول المحدد)
-            const member = message.member;
-            if (!member) return;
-
-            if (!member.roles.cache.has(AUTO_REPLY_ROLE_ID)) return;
-
-            // الرد على كلمة "خط"
-            if (messageContent === 'خط') {
-                await message.delete().catch(err => console.error('فشل حذف رسالة "خط":', err));
-                await message.channel.send(AUTO_MESSAGE_IMAGE);
-                return;
-            }
-
-            // الرد على كلمة "فراغ"
-            if (messageContent === 'فراغ') {
-                await message.delete().catch(err => console.error('فشل حذف رسالة "فراغ":', err));
-                await message.channel.send(FARAGH_REPLY);
-                return;
-            }
-
-        } catch (error) {
-            console.error('خطأ في نظام الردود التلقائية:', error);
-        }
-    });
-
-    // =================================================================================
-    // --- معالج جاهزية البوت ---
-    // =================================================================================
-
-    client.once(Events.ClientReady, async c => {
-        console.log(`✅✅✅ تم تسجيل الدخول باسم ${c.user.tag} والبوت جاهز للعمل!`);
-        
-        const panelChannelId = process.env.TICKET_PANEL_CHANNEL_ID;
-        await refreshTicketPanel(client, panelChannelId);
-        
-        const staffPanelChannelId = '1397092707687727204';
-        await refreshStaffApplicationPanel(client, staffPanelChannelId);
-        
-        const advertisementPanelChannelId = '1397022589825843452';
-        await refreshAdvertisementPanel(client, advertisementPanelChannelId);
-        
-        console.log('✅ تم تحديث جميع panels التيكيت');
-    });
-
-    // تسجيل الدخول
-    client.login(process.env.DISCORD_TOKEN);
-}
-
-// تشغيل البوت
-startBot();)) {
+            if (messageContent.startsWith('$')) {
                 const args = messageContent.slice(1).trim().split(/\s+/);
                 const commandName = args.shift().toLowerCase();
                 
