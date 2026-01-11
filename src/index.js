@@ -900,8 +900,7 @@ async function startBot() {
             const messageContent = message.content.trim();
 
             // معالجة أوامر البريفكس
-            if (messageContent.startsWith('
-
+if (messageContent.startsWith('$')) {
             // معالجة أوامر وضع لا تزعجه
             if (messageContent === '-on' || messageContent === '-off') {
                 if (message.author.id !== SUPER_ADMIN_ID) {
