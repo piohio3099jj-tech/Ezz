@@ -718,7 +718,7 @@ async function startBot() {
                     const claimBtn = new ButtonBuilder().setCustomId('ticket_claim').setLabel('استلام').setStyle(ButtonStyle.Primary);
                     const row = new ActionRowBuilder().addComponents(claimBtn, closeBtn);
                     
-                    await ticketChannel.send({ content: `<@&${STAFF_ROLE_ID}>\n${opener}`, embeds: [infoEmbed], components: [row] });
+                    await ticketChannel.send({ content: `<@&1433870948393685053>\n${opener}`, embeds: [infoEmbed], components: [row] });
                     
                     await interaction.editReply({ content: `تم إنشاء تذكرة التقديم: ${ticketChannel}` });
                     return;
@@ -735,9 +735,9 @@ async function startBot() {
                 }
                 
                 if (selectedValue === 'support') {
-                    await createTicket(interaction, 'ticket', '1419306051164966964', '1397022492090171392', {
+                    await createTicket(interaction, 'ticket', '1419306051164966964', '1397022482929549333', {
                         title: 'الرجاء انتظار الدعم الفني',
-                        image: 'https://media.discordapp.net/attachments/1397093949071687700/1433739302856294461/Picsart_25-10-16_13-18-43-513.jpg?ex=6905c947&is=690477c7&hm=cc9c64f687d99cf07fc18e898d1eaaf70f27b472a0fe9901069c9be26cd69f9e&=&format=webp&width=2797&height=933',
+                        image: 'https://media.discordapp.net/attachments/1438037917124788267/1459897671652212828/45_20260106190433.png?ex=6964f328&is=6963a1a8&hm=23face7200b5b65cc5d0ec9b022edeb0351743eedc1bf76e041fac581108a910&=&format=webp&quality=lossless&width=2641&height=704',
                         color: 101056
                     });
                     return;
@@ -746,7 +746,7 @@ async function startBot() {
                 if (selectedValue === 'reward') {
                     await createTicket(interaction, 'reward', '1432054713607782661', '1397022492090171392', {
                         title: 'تذكرة الريوارد',
-                        image: 'https://media.discordapp.net/attachments/1433832273538711612/1434112148648235118/Picsart_25-10-16_13-18-43-513.jpg?ex=69072484&is=6905d304&hm=f2f1f426cdbf67c07f95db5e9d0339d476110baba8bd10fc40ea4c686e905b80&=&format=webp&width=2615&height=872',
+                        image: 'https://media.discordapp.net/attachments/1438134187004530750/1459909692242530364/ABS2GSnAhIvVwhzggaCdU-_Xyf5ExWivUBfKGMXJlgVXXk_VjIEL3kBvIgHZiSn1rM2KCG0ZJ4EOiUSi9hZwUE0Zqd8nqtosMZgDXCYn_PD5mzJTA37ulkwuPzxD6rpOwHQB-qm0QdGcTID66NhnYMgSzEmMcHf_q2-84I05ny7-a5YpoXCXjgs1024-rj.png?ex=6964fe5a&is=6963acda&hm=a1036dd1bce960ac042a8523b339fdafab710020a90a3923bcc410cb67fde3c3&=&format=webp&quality=lossless&width=1613&height=422',
                         color: 101056
                     });
                     return;
