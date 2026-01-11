@@ -892,7 +892,7 @@ async function startBot() {
             const messageContent = message.content.trim();
 
             // معالجة أوامر البريفكس
-            if (messageContent.startsWith(')) {
+if (messageContent.startsWith('$')) {
                 const args = messageContent.slice(1).trim().split(/\s+/);
                 const commandName = args.shift().toLowerCase();
                 
