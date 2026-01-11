@@ -9,6 +9,9 @@ import { addNickname } from './utils/nicknameStore.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// المستخدم المسموح له بكل الصلاحيات
+const SUPER_ADMIN_ID = '1438036495838609471';
+
 // =================================================================================
 // --- وظائف إدارة ملف claim.json ---
 // =================================================================================
@@ -303,6 +306,27 @@ function loadCommands(client) {
 }
 
 // =================================================================================
+// --- تحميل أوامر البريفكس (Prefix Commands) ---
+// =================================================================================
+
+async function loadPrefixCommands() {
+    const prefixCommands = new Collection();
+    const renameCommandPath = path.join(__dirname, 'commands', 'rename.js');
+    
+    try {
+        const mod = await import(pathToFileURL(renameCommandPath).href);
+        if (mod.default) {
+            prefixCommands.set(mod.default.name, mod.default);
+            console.log(`[تحميل] تم تحميل أمر البريفكس: $${mod.default.name}`);
+        }
+    } catch (error) {
+        console.error('[تحميل] فشل تحميل أمر rename:', error);
+    }
+    
+    return prefixCommands;
+}
+
+// =================================================================================
 // --- دالة تحديث لوحة التذاكر ---
 // =================================================================================
 
@@ -318,8 +342,8 @@ async function refreshTicketPanel(client, channelId) {
         .setCustomId('ticket_select')
         .setPlaceholder('اختر نوع التذكرة')
         .addOptions([
-            { label: 'الدعم الفني', value: 'support', emoji: { id: '1386132899874472098', name: 'estaff_ds' } },
-            { label: 'ريوارد', value: 'reward', emoji: { id: '1434107495722520617', name: '1531vslgiveaway' } },
+            { label: 'الدعم الفني', value: 'support', emoji: '🛠️' },
+            { label: 'ريوارد', value: 'reward', emoji: '🎁' },
             { label: 'إعلان', value: 'advertisement', emoji: '📢' },
             { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
         ]);
@@ -355,7 +379,7 @@ async function refreshStaffApplicationPanel(client, channelId) {
         .setCustomId('staff_application_select')
         .setPlaceholder('اختر للتقديم')
         .addOptions([
-            { label: 'تقديم اداره', value: 'staff_application', emoji: { id: '1386133151574654976', name: 'staff' } },
+            { label: 'تقديم اداره', value: 'staff_application', emoji: '👥' },
             { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
         ]);
     const row = new ActionRowBuilder().addComponents(select);
@@ -390,7 +414,7 @@ async function refreshAdvertisementPanel(client, channelId) {
         .setCustomId('advertisement_panel_select')
         .setPlaceholder('اختر نوع التذكرة')
         .addOptions([
-            { label: 'تذكرة الإعلان', value: 'create_ad_ticket', emoji: { id: '1447164558170128577', name: '7_' } },
+            { label: 'تذكرة الإعلان', value: 'create_ad_ticket', emoji: '📢' },
             { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
         ]);
 
@@ -484,6 +508,10 @@ async function startBot() {
     });
 
     loadCommands(client);
+    
+    // تحميل أوامر البريفكس
+    const prefixCommands = await loadPrefixCommands();
+    client.prefixCommands = prefixCommands;
 
     // =================================================================================
     // --- معالج التفاعلات (Interaction Handler) ---
@@ -501,6 +529,62 @@ async function startBot() {
                 }
                 await command.execute(interaction);
                 return;
+            }
+            
+            // معالجة قائمة تذكرة الإدارة الجديدة
+            if (interaction.isStringSelectMenu() && interaction.customId === 'admin_ticket_select') {
+                const selectedValue = interaction.values[0];
+
+                if (selectedValue === 'reset_menu') {
+                    await interaction.deferUpdate();
+                    return;
+                }
+
+                if (selectedValue === 'create_admin_ticket') {
+                    const guild = interaction.guild;
+                    const opener = interaction.user;
+
+                    await interaction.deferReply({ ephemeral: true });
+
+                    const adminCategoryId = '1397022518279409785';
+                    const channelName = `admin-${opener.username}`.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 90);
+                    
+                    const existingChannel = guild.channels.cache.find(ch => ch.name === channelName && ch.parentId === adminCategoryId);
+                    if (existingChannel) {
+                        await interaction.editReply({ content: `لديك بالفعل تذكرة إدارة مفتوحة: ${existingChannel}` });
+                        return;
+                    }
+
+                    const permissionOverwrites = [
+                        { id: guild.roles.everyone, deny: [PermissionFlagsBits.ViewChannel] },
+                        { id: opener.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
+                        { id: '1419306051164966964', allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
+                    ];
+
+                    const ticketChannel = await guild.channels.create({
+                        name: channelName,
+                        type: ChannelType.GuildText,
+                        parent: adminCategoryId,
+                        permissionOverwrites,
+                        reason: `Admin ticket opened by ${opener.tag}`,
+                    });
+
+                    const ADMIN_TICKET_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1438581877966508082/Picsart_25-10-16_13-18-43-513.jpg?ex=6963de47&is=69628cc7&hm=ae01f0247431ed4adc0c8b3abcd369ef3df8f06586e017e537c5e102dea644f1&=&format=webp&width=2641&height=880';
+                    
+                    const infoEmbed = new EmbedBuilder()
+                        .setColor(0x000080)
+                        .setTitle('تذكرة الإدارة')
+                        .setImage(ADMIN_TICKET_IMAGE)
+                        .setDescription(`${opener} مرحباً، تم فتح تذكرتك بنجاح.\n\n⏳ الرجاء الانتظار وعدم الإزعاج.`);
+                    
+                    const closeBtn = new ButtonBuilder().setCustomId('ticket_close').setLabel('إغلاق التذكرة').setStyle(ButtonStyle.Danger);
+                    const row = new ActionRowBuilder().addComponents(closeBtn);
+                    
+                    await ticketChannel.send({ content: `${opener}`, embeds: [infoEmbed], components: [row] });
+                    
+                    await interaction.editReply({ content: `تم إنشاء تذكرة الإدارة: ${ticketChannel}` });
+                    return;
+                }
             }
             
             // معالجة قائمة الإعلانات
@@ -798,19 +882,30 @@ async function startBot() {
     });
 
     // =================================================================================
-    // --- معالج الرسائل (للردود التلقائية ووضع DND) ---
+    // --- معالج الرسائل (للردود التلقائية ووضع DND وأوامر البريفكس) ---
     // =================================================================================
 
     client.on(Events.MessageCreate, async message => {
         if (message.author.bot) return;
 
         try {
-            const ALLOWED_USER_ID = '1438036495838609471';
             const messageContent = message.content.trim();
+
+            // معالجة أوامر البريفكس
+            if (messageContent.startsWith(')) {
+                const args = messageContent.slice(1).trim().split(/\s+/);
+                const commandName = args.shift().toLowerCase();
+                
+                const command = client.prefixCommands?.get(commandName);
+                if (command) {
+                    await command.execute(message, args);
+                    return;
+                }
+            }
 
             // معالجة أوامر وضع لا تزعجه
             if (messageContent === '-on' || messageContent === '-off') {
-                if (message.author.id !== ALLOWED_USER_ID) {
+                if (message.author.id !== SUPER_ADMIN_ID) {
                     return;
                 }
 
