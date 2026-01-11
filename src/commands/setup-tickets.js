@@ -1043,8 +1043,14 @@ async function startBot() {
                     return; // لا يرد إذا لم يكن لديه صلاحية
                 }
 
-                await refreshSupportPanel(client, message.channel.id);
-                await message.delete().catch(() => {});
+                try {
+                    await refreshSupportPanel(client, message.channel.id);
+                    await message.delete().catch(() => {});
+                    console.log(`✅ تم إرسال لوحة التذكرة بواسطة ${message.author.tag}`);
+                } catch (error) {
+                    console.error('خطأ في إرسال لوحة التذكرة:', error);
+                    await message.reply('حدث خطأ أثناء إرسال اللوحة.').catch(() => {});
+                }
                 return;
             }
 
@@ -1055,9 +1061,15 @@ async function startBot() {
                     return; // لا يرد إذا لم يكن لديه صلاحية
                 }
 
-                const adminPanelChannelId = '1397125375103860747';
-                await refreshAdminTicketPanel(client, adminPanelChannelId);
-                await message.delete().catch(() => {});
+                try {
+                    const adminPanelChannelId = '1397125375103860747';
+                    await refreshAdminTicketPanel(client, adminPanelChannelId);
+                    await message.delete().catch(() => {});
+                    console.log(`✅ تم إرسال لوحة تذكرة الإدارة بواسطة ${message.author.tag}`);
+                } catch (error) {
+                    console.error('خطأ في إرسال لوحة تذكرة الإدارة:', error);
+                    await message.reply('حدث خطأ أثناء إرسال اللوحة.').catch(() => {});
+                }
                 return;
             }
 
