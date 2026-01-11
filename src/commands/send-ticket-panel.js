@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, ChannelType, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } from 'discord.js';
 
-const PANEL_IMAGE = 'https://cdn.discordapp.com/attachments/1438037917124788267/1438521792296652800/Picsart_25-10-16_13-18-43-513.jpg?ex=69172f51&is=6915ddd1&hm=11fe8fbf7548e562ec12486d86dd5432923a9796582c42275bec8742ca9e157b&';
+const PANEL_IMAGE = 'https://media.discordapp.net/attachments/1438134187004530750/1459909692242530364/ABS2GSnAhIvVwhzggaCdU-_Xyf5ExWivUBfKGMXJlgVXXk_VjIEL3kBvIgHZiSn1rM2KCG0ZJ4EOiUSi9hZwUE0Zqd8nqtosMZgDXCYn_PD5mzJTA37ulkwuPzxD6rpOwHQB-qm0QdGcTID66NhnYMgSzEmMcHf_q2-84I05ny7-a5YpoXCXjgs1024-rj.png?ex=6964fe5a&is=6963acda&hm=a1036dd1bce960ac042a8523b339fdafab710020a90a3923bcc410cb67fde3c3&=&format=webp&quality=lossless&width=866&height=227';
 const TARGET_CHANNEL_ID = '1397022592954663016';
-const ALLOWED_ROLES = ['1419306155145953400', '1418942792121585724'];
+const ALLOWED_ROLES = ['1419306155145953400', '1418942792121585724', '1436792989644095488'];
 
 export default {
 	data: new SlashCommandBuilder()
