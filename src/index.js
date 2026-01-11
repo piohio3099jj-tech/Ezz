@@ -373,16 +373,24 @@ async function refreshStaffApplicationPanel(client, channelId) {
     const channel = await client.channels.fetch(channelId).catch(() => null);
     if (!channel || channel.type !== ChannelType.GuildText) return;
     
-    const STAFF_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1459897671652212828/45_20260106190433.png?ex=6964f328&is=6963a1a8&hm=23face7200b5b65cc5d0ec9b022edeb0351743eedc1bf76e041fac581108a910&=&format=webp&quality=lossless&width=2641&height=704';
-    const embed = new EmbedBuilder().setColor(101056).setTitle('تقديم إدارة').setImage(STAFF_PANEL_IMAGE);
-    const select = new StringSelectMenuBuilder()
-        .setCustomId('staff_application_select')
-        .setPlaceholder('اختر للتقديم')
-        .addOptions([
-            { label: 'تقديم اداره', value: 'staff_application', emoji: '👥' },
-            { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
-        ]);
-    const row = new ActionRowBuilder().addComponents(select);
+   const STAFF_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1459897671652212828/45_20260106190433.png?ex=6964f328&is=6963a1a8&hm=23face7200b5b65cc5d0ec9b022edeb0351743eedc1bf76e041fac581108a910&=&format=webp&quality=lossless&width=2641&height=704';
+
+const embed = new EmbedBuilder()
+    .setColor(101056)
+    .setTitle('تقديم إدارة')
+    .setDescription('📢 **النقل مفتوح حاليًا**')
+    .setImage(STAFF_PANEL_IMAGE);
+
+const select = new StringSelectMenuBuilder()
+    .setCustomId('staff_application_select')
+    .setPlaceholder('اختر للتقديم')
+    .addOptions([
+        { label: 'تقديم اداره', value: 'staff_application', emoji: '👥' },
+        { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
+    ]);
+
+const row = new ActionRowBuilder().addComponents(select);
+
     
     try {
         const messages = await channel.messages.fetch({ limit: 50 }).catch(() => null);
