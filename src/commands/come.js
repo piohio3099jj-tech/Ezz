@@ -9,6 +9,12 @@ export default {
                 .setName('user')
                 .setDescription('العضو المراد استدعاؤه')
                 .setRequired(true)
+        )
+        .addStringOption(option =>
+            option
+                .setName('message')
+                .setDescription('رسالة اختيارية للعضو')
+                .setRequired(false)
         ),
 
     async execute(interaction) {
@@ -24,6 +30,7 @@ export default {
         }
 
         const targetUser = interaction.options.getUser('user');
+        const customMessage = interaction.options.getString('message');
         const currentChannel = interaction.channel;
 
         // إرسال رد في الروم
@@ -35,8 +42,13 @@ export default {
                 { name: 'الروم', value: `${currentChannel}`, inline: true },
                 { name: 'المستدعي', value: `${interaction.user}`, inline: true },
                 { name: 'الوقت', value: `<t:${Math.floor(Date.now() / 1000)}:R>`, inline: true }
-            )
-            .setFooter({ text: `تم الإرسال بواسطة ${interaction.user.tag}` })
+            );
+
+        if (customMessage) {
+            channelEmbed.addFields({ name: 'الرسالة المرسلة', value: customMessage, inline: false });
+        }
+
+        channelEmbed.setFooter({ text: `تم الإرسال بواسطة ${interaction.user.tag}` })
             .setTimestamp();
 
         await interaction.reply({ embeds: [channelEmbed] });
@@ -52,8 +64,13 @@ export default {
                     { name: 'السيرفر', value: `${interaction.guild.name}`, inline: true },
                     { name: 'المستدعي', value: `${interaction.user}`, inline: true },
                     { name: 'الوقت', value: `<t:${Math.floor(Date.now() / 1000)}:F>`, inline: false }
-                )
-                .setFooter({ text: 'يرجى التوجه إلى الروم في أقرب وقت' })
+                );
+
+            if (customMessage) {
+                dmEmbed.addFields({ name: '💬 الرسالة', value: customMessage, inline: false });
+            }
+
+            dmEmbed.setFooter({ text: 'يرجى التوجه إلى الروم في أقرب وقت' })
                 .setTimestamp();
 
             await targetUser.send({ embeds: [dmEmbed] });
