@@ -781,12 +781,13 @@ async function startBot() {
                         .setColor(101056)
                         .setTitle('📢 تذكرة إعلان')
                         .setImage(ADS_TICKET_IMAGE)
-                        .setDescription(`${opener} تم فتح تذكرة الإعلان بنجاح.\n\nسيتم الرد عليك قريباً من قبل فريق الإدارة.`);
+                        .setDescription(`${opener} تم فتح تذكرة الإعلان بنجاح.
+
+سيتم الرد عليك قريباً من قبل فريق الإدارة.`);
                     
                     const closeBtn = new ButtonBuilder().setCustomId('ticket_close').setLabel('حذف التيكيت').setStyle(ButtonStyle.Danger);
                     const mainRow = new ActionRowBuilder().addComponents(closeBtn);
 
-                    // --- إضافة قائمة الخيارات ورسالة التنويه ---
                     const adTypeSelect = new StringSelectMenuBuilder()
                         .setCustomId('ad_type_select')
                         .setPlaceholder('اختر نوع الاعلان لاهنت')
@@ -810,14 +811,26 @@ async function startBot() {
                     const adNoticeEmbed = new EmbedBuilder()
                         .setColor(0xFFA500)
                         .setTitle('⚠️ تنويه هام بخصوص الإعلانات')
-                        .setDescription(`\nإعلانات الرومات في أول كاتجوري بالسيرفر :\n\nإذا كنت ترغب في أن يكون الروم في غير الكاتجوري الأول، سيكون هناك زيادة **1m** مليون :peepo_beat_saber:\n\nإذا أردت <@1142808181626634261> أن يقوم بالمنشن للعضو في الروم، سيكون هناك زيادة **1m** مليون :\n\nزيادة منشن **here** بتدفع زيادة **600 الف** كريدت لو زيادة منشن **everyone** بتدفع زيادة **900 الف** كريدت\n\n**نقبل طرق دفع أخرى غير الكريدت مثل :**\nنيتروهات او افكتات دينار اردني ، ريزر قولد ، فودافون مصري\n                        `);
+                        .setDescription(`
+إعلانات الرومات في أول كاتجوري بالسيرفر :
+
+إذا كنت ترغب في أن يكون الروم في غير الكاتجوري الأول، سيكون هناك زيادة **1m** مليون :peepo_beat_saber:
+
+إذا أردت <@1142808181626634261> أن يقوم بالمنشن للعضو في الروم، سيكون هناك زيادة **1m** مليون :
+
+زيادة منشن **here** بتدفع زيادة **600 الف** كريدت لو زيادة منشن **everyone** بتدفع زيادة **900 الف** كريدت
+
+**نقبل طرق دفع أخرى غير الكريدت مثل :**
+نيتروهات او افكتات دينار اردني ، ريزر قولد ، فودافون مصري
+                        `);
                     
-                    await ticketChannel.send({ content: `<@&1432054713607782661>\n${opener}`, embeds: [infoEmbed], components: [mainRow] });
+                    await ticketChannel.send({ content: `<@&1432054713607782661>
+${opener}`, embeds: [infoEmbed], components: [mainRow] });
                     await ticketChannel.send({ content: 'اختر نوع الاعلان لاهنت', embeds: [adNoticeEmbed], components: [adSelectRow] });
                     
                     await interaction.editReply({ content: `تم إنشاء تذكرة الإعلان: ${ticketChannel}` });
                     return;
-                    }
+                }
 
                     const permissionOverwrites = [
                         { id: guild.roles.everyone, deny: [PermissionFlagsBits.ViewChannel] },
@@ -849,7 +862,7 @@ async function startBot() {
                     await interaction.editReply({ content: `تم إنشاء تذكرة الإعلان: ${ticketChannel}` });
                     return;
                 }
-            }
+            } catch (e) {}
             
             // معالجة قائمة التقديم على الإدارة
             if (interaction.isStringSelectMenu() && interaction.customId === 'staff_application_select') {
@@ -927,7 +940,7 @@ async function startBot() {
             }
 
             // معالجة قائمة التذاكر الرئيسية
-            if (interaction.isStringSelectMenu() && interaction.customId === 'ad_type_select') {
+                        if (interaction.isStringSelectMenu() && interaction.customId === 'ad_type_select') {
                 const selectedValue = interaction.values[0];
                 const option = interaction.component.options.find(o => o.value === selectedValue);
                 
