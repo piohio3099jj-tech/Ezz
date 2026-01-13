@@ -862,7 +862,7 @@ ${opener}`, embeds: [infoEmbed], components: [mainRow] });
                     await interaction.editReply({ content: `تم إنشاء تذكرة الإعلان: ${ticketChannel}` });
                     return;
                 }
-            } catch (e) {}
+            } catch (error) {}
             
             // معالجة قائمة التقديم على الإدارة
             if (interaction.isStringSelectMenu() && interaction.customId === 'staff_application_select') {
