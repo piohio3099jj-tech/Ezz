@@ -784,6 +784,64 @@ async function startBot() {
                         .setDescription(`${opener} تم فتح تذكرة الإعلان بنجاح.\n\nسيتم الرد عليك قريباً من قبل فريق الإدارة.`);
                     
                     const closeBtn = new ButtonBuilder().setCustomId('ticket_close').setLabel('حذف التيكيت').setStyle(ButtonStyle.Danger);
+                    const mainRow = new ActionRowBuilder().addComponents(closeBtn);
+
+                    // --- إضافة قائمة الخيارات ورسالة التنويه ---
+                    const adTypeSelect = new StringSelectMenuBuilder()
+                        .setCustomId('ad_type_select')
+                        .setPlaceholder('اختر نوع الاعلان لاهنت')
+                        .addOptions([
+                            { label: 'برود لاعضاء اونلاين', description: 'السعر 5m + البوت مايتبند', value: 'ad_online_broadcast' },
+                            { label: 'برود لكل اعضاء السيرفر', description: 'يرسل للجميع والسعر 35m (لو اول شرط تدفع زياده 3m)', value: 'ad_all_broadcast' },
+                            { label: 'اعلان وسط فعاليه 30sec', description: 'السعر 5m (لو اول شرط تدفع زياده 3m)', value: 'ad_event_30s' },
+                            { label: 'اعلان وسط فعاليه 90sec', description: 'السعر : 8.5m', value: 'ad_event_90s' },
+                            { label: 'نقل فعاليه لسيرفرك', description: 'على حسب تفاعلك والسعر 14-35m', value: 'ad_transfer_event' },
+                            { label: 'روم يوم + منشن + قيف', description: 'السعر 1m', value: 'ad_room_1day' },
+                            { label: 'روم 3 ايام + منشن + قيف', description: 'السعر 2.5m', value: 'ad_room_3days' },
+                            { label: 'روم 5 ايام + منشن + قيف', description: 'السعر 4m', value: 'ad_room_5days' },
+                            { label: 'روم 7 ايام + منشن + قيف', description: 'السعر 5.5m', value: 'ad_room_7days' },
+                            { label: 'روم 14 يوم + منشن + وسط + قريت + قيف', description: 'السعر 16.5m', value: 'ad_room_14days' },
+                            { label: 'ضمان 100-200', description: 'السعر 25m', value: 'ad_guarantee_100_200' },
+                            { label: 'ضمان 200-1k', description: 'السعر 50m', value: 'ad_guarantee_200_1k' }
+                        ]);
+
+                    const adSelectRow = new ActionRowBuilder().addComponents(adTypeSelect);
+
+                    const adNoticeEmbed = new EmbedBuilder()
+                        .setColor(0xFFA500)
+                        .setTitle('⚠️ تنويه هام بخصوص الإعلانات')
+                        .setDescription(`\nإعلانات الرومات في أول كاتجوري بالسيرفر :\n\nإذا كنت ترغب في أن يكون الروم في غير الكاتجوري الأول، سيكون هناك زيادة **1m** مليون :peepo_beat_saber:\n\nإذا أردت <@1142808181626634261> أن يقوم بالمنشن للعضو في الروم، سيكون هناك زيادة **1m** مليون :\n\nزيادة منشن **here** بتدفع زيادة **600 الف** كريدت لو زيادة منشن **everyone** بتدفع زيادة **900 الف** كريدت\n\n**نقبل طرق دفع أخرى غير الكريدت مثل :**\nنيتروهات او افكتات دينار اردني ، ريزر قولد ، فودافون مصري\n                        `);
+                    
+                    await ticketChannel.send({ content: `<@&1432054713607782661>\n${opener}`, embeds: [infoEmbed], components: [mainRow] });
+                    await ticketChannel.send({ content: 'اختر نوع الاعلان لاهنت', embeds: [adNoticeEmbed], components: [adSelectRow] });
+                    
+                    await interaction.editReply({ content: `تم إنشاء تذكرة الإعلان: ${ticketChannel}` });
+                    return;
+                    }
+
+                    const permissionOverwrites = [
+                        { id: guild.roles.everyone, deny: [PermissionFlagsBits.ViewChannel] },
+                        { id: opener.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
+                        { id: '1432054713607782661', allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
+                    ];
+
+                    const ticketChannel = await guild.channels.create({
+                        name: channelName,
+                        type: ChannelType.GuildText,
+                        parent: adsCategoryId,
+                        permissionOverwrites,
+                        reason: `Advertisement ticket opened by ${opener.tag}`,
+                    });
+
+                    const ADS_TICKET_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1438581879270932601/Picsart_25-10-16_13-18-24-693.jpg?ex=691ff907&is=691ea787&hm=c582f8003a90f74f28e482e73473f43c0eb825d1ce8b82aef31c97b09a5a564b&=&format=webp&width=2615&height=872';
+                    
+                    const infoEmbed = new EmbedBuilder()
+                        .setColor(101056)
+                        .setTitle('📢 تذكرة إعلان')
+                        .setImage(ADS_TICKET_IMAGE)
+                        .setDescription(`${opener} تم فتح تذكرة الإعلان بنجاح.\n\nسيتم الرد عليك قريباً من قبل فريق الإدارة.`);
+                    
+                    const closeBtn = new ButtonBuilder().setCustomId('ticket_close').setLabel('حذف التيكيت').setStyle(ButtonStyle.Danger);
                     const row = new ActionRowBuilder().addComponents(closeBtn);
                     
                     await ticketChannel.send({ content: `<@&1432054713607782661>\n${opener}`, embeds: [infoEmbed], components: [row] });
@@ -869,6 +927,16 @@ async function startBot() {
             }
 
             // معالجة قائمة التذاكر الرئيسية
+            if (interaction.isStringSelectMenu() && interaction.customId === 'ad_type_select') {
+                const selectedValue = interaction.values[0];
+                const option = interaction.component.options.find(o => o.value === selectedValue);
+                
+                await interaction.reply({
+                    content: `<@1142808181626634261>\nنوع الاعلان : ${option.label}`
+                });
+                return;
+            }
+
             if (interaction.isStringSelectMenu() && interaction.customId === 'ticket_select') {
                 const selectedValue = interaction.values[0];
 
