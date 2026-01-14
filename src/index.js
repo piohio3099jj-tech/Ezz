@@ -897,42 +897,50 @@ async function startBot() {
             }
 
             // معالجة زر الاستلام
-            if (interaction.isButton() && interaction.customId === 'ticket_claim') {
-                const member = interaction.member;
-                const channel = interaction.channel;
+        if (interaction.isButton() && interaction.customId === 'ticket_claim') {
+    const member = interaction.member;
+    const channel = interaction.channel;
 
-                if (!member.permissions.has(PermissionFlagsBits.ManageChannels)) {
-                    await interaction.reply({ content: 'ليس لديك الصلاحية لاستلام هذه التذكرة.', ephemeral: true });
-                    return;
-                }
+    const claimRoleId = '1419306051164966964';
 
-                await interaction.deferUpdate();
+    // التحقق من الرول
+    if (!member.roles.cache.has(claimRoleId)) {
+        await interaction.reply({
+            content: '❌ ليس لديك الرتبة المطلوبة لاستلام هذه التذكرة.',
+            ephemeral: true
+        });
+        return;
+    }
 
-                const newClaimCount = incrementClaimCount(member.id);
+    await interaction.deferUpdate();
 
-                const disabledClaimBtn = new ButtonBuilder()
-                    .setCustomId('ticket_claim_disabled')
-                    .setLabel('تم الاستلام')
-                    .setStyle(ButtonStyle.Success)
-                    .setDisabled(true);
+    const disabledClaimBtn = new ButtonBuilder()
+        .setCustomId('ticket_claim_disabled')
+        .setLabel('تم الاستلام')
+        .setStyle(ButtonStyle.Success)
+        .setDisabled(true);
 
-                const originalCloseBtn = interaction.message.components[0].components.find(c => c.customId === 'ticket_close');
-                
-                const updatedRow = new ActionRowBuilder().addComponents(disabledClaimBtn, originalCloseBtn);
+    const originalCloseBtn =
+        interaction.message.components[0].components.find(
+            c => c.customId === 'ticket_close'
+        );
 
-                await interaction.message.edit({ components: [updatedRow] });
+    const updatedRow = new ActionRowBuilder().addComponents(
+        disabledClaimBtn,
+        originalCloseBtn
+    );
 
-                await channel.send({ content: `✅ تم استلام هذه التذكرة بواسطة ${member}.` });
+    await interaction.message.edit({ components: [updatedRow] });
 
-                try {
-                    await member.send({
-                        content: `لقد قمت باستلام تذكرة جديدة (${channel.name}).\n**إجمالي استلاماتك الآن هو: ${newClaimCount} تذكرة.**`
-                    });
-                } catch (dmError) {
-                    console.error(`فشل إرسال رسالة خاصة إلى ${member.user.tag}:`, dmError);
-                    await channel.send({ content: `تنبيه لـ ${member}: لم أتمكن من إرسال إحصائياتك على الخاص.` });
-                }
-            }
+    const claimEmbed = new EmbedBuilder()
+        .setColor(0x0B3D91) // أزرق غامق
+        .setDescription(`✅ **تم استلام التذكرة من الإداري**\n\n${member}`)
+        .setImage(
+            'https://media.discordapp.net/attachments/1438134187004530750/1461015762830491925/AIJ2gl9rR60ut9c9VuyEfOt5Sh64fM9H-jGwoqAp8nwkSyE18Yv00t0GgM8ovOTtuh5jU0lkvkJxdd10Zaty8en4Oxx6Mj0_6Bn2j4sXQmM7LI8RPD8If2NEBipZQLjR-py1A08ZVbvigtAd5EGHLN2z41pNYnNeS5Owx4QuCWR1_FfEHYBMVatAkp94UeM9BxQg3euIrSlpAZt_QqjrTZNuEsCLM7inOSjrkFH5sKvgYdPtUcqvWPyQm97flebisRPYdS-5umesx01GlPMZ8TlvbApdF8kIFYxAHfA0r4ElYcoJngdXYCmcXm49BakT36ynYUQYB8FKWGFOaNyoDeY6uFpYs1024-rj.png'
+        );
+
+    await channel.send({ embeds: [claimEmbed] });
+}
 
             // معالجة زر الإغلاق
             if (interaction.isButton() && interaction.customId === 'ticket_close') {
