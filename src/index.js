@@ -497,18 +497,19 @@ async function refreshAdminTicketPanel(client, channelId) {
     const channel = await client.channels.fetch(channelId).catch(() => null);
     if (!channel || channel.type !== ChannelType.GuildText) return;
     
-    const ADMIN_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1438037917124788267/1438581877966508082/Picsart_25-10-16_13-18-43-513.jpg?ex=6963de47&is=69628cc7&hm=ae01f0247431ed4adc0c8b3abcd369ef3df8f06586e017e537c5e102dea644f1&=&format=webp&width=2641&height=880';
+    const ADMIN_PANEL_IMAGE = 'https://media.discordapp.net/attachments/1446618248232566877/1461024148212944991/ABS2GSl8aaUWEOjQEqpKuQKxr8dS0hOwWKFkuEMlnpB3aH_j81VOez8ZsNDMsK4pJHRoTwXZjvvbtdEotva6JwPLJQoTq-A33bUc6U-eSqZWfrC_r6AHUTlJfBI36xvxsgG-4y0vvdy560jg_cReDBRMambgTN9i7-5le4S3zr_kVW6On4Zj9gs1024-rj.png?ex=69690c45&is=6967bac5&hm=c4754716a179cbe77e71adcadb84809cfbc83650b842020842e35d000fb1b106&=&format=webp&quality=lossless&width=1613&height=422';
     
-    const embed = new EmbedBuilder()
-        .setColor(0x000080)
-        .setTitle('تذكرة الإدارة')
-        .setImage(ADMIN_PANEL_IMAGE);
+  const embed = new EmbedBuilder()
+    .setColor(0x000080)
+    .setTitle('تذكرة الإدارة')
+    .setDescription('**لطلب الترقيات او للشكوئ على اداري 📃**')
+    .setImage(ADMIN_PANEL_IMAGE);
     
     const select = new StringSelectMenuBuilder()
         .setCustomId('admin_ticket_select')
         .setPlaceholder('اختر للتواصل مع الإدارة')
         .addOptions([
-            { label: 'تذكرة الإدارة', value: 'create_admin_ticket', emoji: '👑' },
+            { label: 'تذكرة الإدارة', value: 'create_admin_ticket', emoji: '📝' },
             { label: 'Reset Menu', value: 'reset_menu', emoji: '🔄' },
         ]);
 
@@ -709,7 +710,7 @@ async function startBot() {
                     const permissionOverwrites = [
                         { id: guild.roles.everyone, deny: [PermissionFlagsBits.ViewChannel] },
                         { id: opener.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
-                        { id: '1419306051164966964', allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
+                        { id: '1433870948393685053', allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] },
                     ];
 
                     const ticketChannel = await guild.channels.create({
