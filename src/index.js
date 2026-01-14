@@ -897,7 +897,7 @@ async function startBot() {
             }
 
             // معالجة زر الاستلام
-        if (interaction.isButton() && interaction.customId === 'ticket_claim') {
+      if (interaction.isButton() && interaction.customId === 'ticket_claim') {
     const member = interaction.member;
     const channel = interaction.channel;
 
@@ -932,14 +932,13 @@ async function startBot() {
 
     await interaction.message.edit({ components: [updatedRow] });
 
-    const claimEmbed = new EmbedBuilder()
-        .setColor(0x0B3D91) // أزرق غامق
-        .setDescription(`✅ **تم استلام التذكرة من الإداري**\n\n${member}`)
-        .setImage(
-            'https://media.discordapp.net/attachments/1438134187004530750/1461015762830491925/AIJ2gl9rR60ut9c9VuyEfOt5Sh64fM9H-jGwoqAp8nwkSyE18Yv00t0GgM8ovOTtuh5jU0lkvkJxdd10Zaty8en4Oxx6Mj0_6Bn2j4sXQmM7LI8RPD8If2NEBipZQLjR-py1A08ZVbvigtAd5EGHLN2z41pNYnNeS5Owx4QuCWR1_FfEHYBMVatAkp94UeM9BxQg3euIrSlpAZt_QqjrTZNuEsCLM7inOSjrkFH5sKvgYdPtUcqvWPyQm97flebisRPYdS-5umesx01GlPMZ8TlvbApdF8kIFYxAHfA0r4ElYcoJngdXYCmcXm49BakT36ynYUQYB8FKWGFOaNyoDeY6uFpYs1024-rj.png'
-        );
-
-    await channel.send({ embeds: [claimEmbed] });
+    // رسالة الاستلام (بدون إمبد)
+    await channel.send(
+        `━━━━━━━━━━━━━━━━━━━
+✅ **تم استلام التذكرة**
+👤 بواسطة: ${member}
+━━━━━━━━━━━━━━━━━━━`
+    );
 }
 
             // معالجة زر الإغلاق
