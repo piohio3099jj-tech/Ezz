@@ -1146,7 +1146,16 @@ async function startBot() {
         }
     });
 
-   
+   client.on('messageCreate', async (message) => {
+  if (message.author.bot) return;
+
+  if (message.content.trim() === 'خط') {
+    await message.reply({
+      content: 'https://media.discordapp.net/attachments/1440038883164295249/1458552604488372375/lv_0_.gif?ex=6968a037&is=69674eb7&hm=238dee168fba5eb02c2c3b583db1f30b4c1e7a31143cd5890b286f0a855a8f42&=&width=1792&height=88'
+    });
+  }
+});
+
     // =================================================================================
     // --- معالج جاهزية البوت ---
     // =================================================================================
