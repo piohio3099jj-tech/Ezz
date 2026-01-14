@@ -897,13 +897,12 @@ async function startBot() {
             }
 
             // معالجة زر الاستلام
-      if (interaction.isButton() && interaction.customId === 'ticket_claim') {
+    if (interaction.isButton() && interaction.customId === 'ticket_claim') {
     const member = interaction.member;
     const channel = interaction.channel;
 
     const claimRoleId = '1419306051164966964';
 
-    // التحقق من الرول
     if (!member.roles.cache.has(claimRoleId)) {
         await interaction.reply({
             content: '❌ ليس لديك الرتبة المطلوبة لاستلام هذه التذكرة.',
@@ -932,13 +931,14 @@ async function startBot() {
 
     await interaction.message.edit({ components: [updatedRow] });
 
-    // رسالة الاستلام (بدون إمبد)
-    await channel.send(
-        `━━━━━━━━━━━━━━━━━━━
-✅ **تم استلام التذكرة**
-👤 بواسطة: ${member}
-━━━━━━━━━━━━━━━━━━━`
-    );
+    const claimEmbed = new EmbedBuilder()
+        .setColor(0x0B3D91)
+        .setDescription(
+            `✅ **تم استلام التذكرة**\n` +
+            `👤 بواسطة: ${member}`
+        );
+
+    await channel.send({ embeds: [claimEmbed] });
 }
 
             // معالجة زر الإغلاق
